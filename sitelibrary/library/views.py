@@ -73,7 +73,10 @@ books = [
     }
 ]
 
-data = {"books": books, "title": "Library"}
+menu = [{"title": "Home", "URL": "home"}, {"title": "About", "URL": "about"}, {"title": "Authors", "URL": "authors"},
+        {"title": "Log in", "URL": "log_in"}]
+
+data = {"books": books, "title": "Library", "menu": menu}
 # Create your views here.
 def index(request):
     return render(request, 'library/index.html', context=data)
