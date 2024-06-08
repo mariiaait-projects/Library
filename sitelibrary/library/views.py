@@ -84,24 +84,39 @@ books = [
     }
 ]
 
+
+def get_authors():
+    authors_data = []
+
+    for book in books:
+        author = book["author"]
+        if not any(map(lambda data: data["author"] == author, authors_data)):
+            authors_data.append({"author": book["author"]})
+    return authors_data
+
+
 menu = [{"title": "Home", "URL": "home"}, {"title": "About", "URL": "about"}, {"title": "Authors", "URL": "authors"},
         {"title": "Log in", "URL": "log_in"}]
 
-data = {"books": books, "title": "Library", "menu": menu}
+data = {"books": books, "title": "Library", "menu": menu, "authors": get_authors()}
 
 
 # Create your views here.
 def index(request):
     return render(request, 'library/index.html', context=data)
 
+
 def about(request):
     return render(request, 'library/about.html', context=data)
+
 
 def authors(request):
     return render(request, 'library/authors.html', context=data)
 
+
 def log_in(request):
     return render(request, 'library/log_in.html', context=data)
+
 
 def book_by_id(request, IDBook):
     for book in books:
