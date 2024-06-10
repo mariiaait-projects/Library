@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{%block content%}
+    <h2>Registration</h2>
+    <form>
+        <p><label for="fname">First name: </label><br>
+        <input type="text" id="fname" name="fname"></p>
+        <p><label for="lname">Last name: </label><br>
+        <input type="text" id="lname" name="lname"></p>
+        <p><label for="phone">Phone number: </label><br>
+        <input type="text" id="phone" name="phone"></p>
+        <p><label for="male">Male: </label><br>
+        <input type="radio" id="male" name="gender"><br>
+        <label for="female">Female: </label><br>
+        <input type="radio" id="female" name="gender"></p>
+        <p><label for="mail">Email: </label><br>
+        <input type="email" id="mail" name="mail"></p>
+        <p><label for="password">Password: </label><br>
+        <input type="password" id="password" name="password"></p>
+    </form>
+{%endblock%}

@@ -123,3 +123,9 @@ def book_by_id(request, IDBook):
         if book["IDBook"] == IDBook:
             return render(request, 'library/book_by_id.html', context=book)
     raise Http404("Book not found")
+
+def registration(request):
+    return render(request, 'library/registration.html')
+
+def authorization(request):
+    return render(request, 'library/authorization.html')
