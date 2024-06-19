@@ -96,9 +96,11 @@ def get_authors():
 
 
 menu = [{"title": "Home", "URL": "home"}, {"title": "About", "URL": "about"}, {"title": "Authors", "URL": "authors"},
-        {"title": "Log in", "URL": "log_in"}]
+        {"title": "Genres", "URL": "genres"}, {"title": "Log in", "URL": "log_in"}]
 
-data = {"books": books, "title": "Library", "menu": menu, "authors": get_authors()}
+list_genre = ["Fiction", "Science", "Technology", "Fantasy"]
+
+data = {"books": books, "title": "Library", "menu": menu, "authors": get_authors(), "genres": list_genre}
 
 
 # Create your views here.
@@ -112,6 +114,9 @@ def about(request):
 
 def authors(request):
     return render(request, 'library/authors.html', context=data)
+
+def genres(request):
+    return render(request, 'library/genres.html', context=data)
 
 
 def log_in(request):
