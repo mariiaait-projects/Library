@@ -98,8 +98,10 @@ def get_authors():
 menu = [{"title": "Home", "URL": "home"}, {"title": "About", "URL": "about"}, {"title": "Authors", "URL": "authors"},
         {"title": "Genres", "URL": "genres"}, {"title": "Log in", "URL": "log_in"}]
 
-list_genre = [{"id": 1, "title": "Fiction"}, {"id": 2, "title": "Science"}, {"id": 3, "title": "Technology"},
-              {"id": 4, "title": "Fantasy"}]
+list_genre = [{"IDGenre": 1, "title": "Fiction"},
+              {"IDGenre": 2, "title": "Science"},
+              {"IDGenre": 3, "title": "Technology"},
+              {"IDGenre": 4, "title": "Fantasy"}]
 
 data = {"books": books, "title": "Library", "menu": menu, "authors": get_authors(), "genres": list_genre}
 
@@ -139,5 +141,9 @@ def genre_by_id(request, IDGenre):
         if genre["id"] == IDGenre:
             genre_title = genre["title"]
             break
-
-
+    for book in books:
+        if genre_title == book["genre"]:
+            books_by_genre.append(book)
+    if books_by_genre:
+        return render(request, 'library/genre_by_id.html', context={"books": books_by_genre})
+    raise Http404("Genre not found")

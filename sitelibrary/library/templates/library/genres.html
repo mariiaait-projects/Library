@@ -3,7 +3,7 @@
     <h2> Genres </h2>
     <ol>
     {% for genre in genres %}
-        <li> <a href="{%url 'genres_by_id' genre.IDGenre%}"> {{ genre }} </a> </li>
+       <li> <a href="{%url 'genre_by_id' genre.IDGenre%}"> {{ genre.title }} </a> </li>
         {% endfor %}
     </ol>
 {%endblock%}
