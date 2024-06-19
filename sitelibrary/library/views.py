@@ -98,7 +98,8 @@ def get_authors():
 menu = [{"title": "Home", "URL": "home"}, {"title": "About", "URL": "about"}, {"title": "Authors", "URL": "authors"},
         {"title": "Genres", "URL": "genres"}, {"title": "Log in", "URL": "log_in"}]
 
-list_genre = ["Fiction", "Science", "Technology", "Fantasy"]
+list_genre = [{"id": 1, "title": "Fiction"}, {"id": 2, "title": "Science"}, {"id": 3, "title": "Technology"},
+              {"id": 4, "title": "Fantasy"}]
 
 data = {"books": books, "title": "Library", "menu": menu, "authors": get_authors(), "genres": list_genre}
 
@@ -115,6 +116,7 @@ def about(request):
 def authors(request):
     return render(request, 'library/authors.html', context=data)
 
+
 def genres(request):
     return render(request, 'library/genres.html', context=data)
 
@@ -128,3 +130,14 @@ def book_by_id(request, IDBook):
         if book["IDBook"] == IDBook:
             return render(request, 'library/book_by_id.html', context=book)
     raise Http404("Book not found")
+
+
+def genre_by_id(request, IDGenre):
+    books_by_genre = []
+    genre_title = ""
+    for genre in list_genre:
+        if genre["id"] == IDGenre:
+            genre_title = genre["title"]
+            break
+
+
