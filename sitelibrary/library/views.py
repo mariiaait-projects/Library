@@ -95,10 +95,22 @@ def get_authors():
     return authors_data
 
 
-menu = [{"title": "Home", "URL": "home"}, {"title": "About", "URL": "about"}, {"title": "Authors", "URL": "authors"},
+menu = [{"title": "Home", "URL": "home"},
+        {"title": "About", "URL": "about"},
+        {"title": "Authors", "URL": "authors"},
+        {"title": "Genres", "URL": "genres"},
         {"title": "Log in", "URL": "log_in"}]
 
-data = {"books": books, "title": "Library", "menu": menu, "authors": get_authors()}
+list_genre = [{"IDGenre": 1, "title": "Fiction"},
+              {"IDGenre": 2, "title": "Science"},
+              {"IDGenre": 3, "title": "Technology"},
+              {"IDGenre": 4, "title": "Fantasy"}]
+
+data = {"books": books,
+        "title": "Library", 
+        "menu": menu,
+        "authors": get_authors(),
+        "genres": list_genre}
 
 
 # Create your views here.
@@ -114,6 +126,10 @@ def authors(request):
     return render(request, 'library/authors.html', context=data)
 
 
+def genres(request):
+    return render(request, 'library/genres.html', context=data)
+
+
 def log_in(request):
     return render(request, 'library/log_in.html', context=data)
 
@@ -123,3 +139,18 @@ def book_by_id(request, IDBook):
         if book["IDBook"] == IDBook:
             return render(request, 'library/book_by_id.html', context=book)
     raise Http404("Book not found")
+
+
+def genre_by_id(request, IDGenre):
+    books_by_genre = []
+    genre_title = ""
+    for genre in list_genre:
+        if genre["id"] == IDGenre:
+            genre_title = genre["title"]
+            break
+    for book in books:
+        if genre_title == book["genre"]:
+            books_by_genre.append(book)
+    if books_by_genre:
+        return render(request, 'library/genre_by_id.html', context={"books": books_by_genre})
+    raise Http404("Genre not found")
