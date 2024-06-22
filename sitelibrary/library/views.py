@@ -109,8 +109,7 @@ list_genre = [{"IDGenre": 1, "title": "Fiction"},
 data = {"books": books,
         "title": "Library", 
         "menu": menu,
-        "authors": get_authors(),
-        "genres": list_genre}
+        "authors": get_authors()}
 
 
 # Create your views here.
@@ -145,12 +144,12 @@ def genre_by_id(request, IDGenre):
     books_by_genre = []
     genre_title = ""
     for genre in list_genre:
-        if genre["id"] == IDGenre:
+        if genre["IDGenre"] == IDGenre:
             genre_title = genre["title"]
             break
     for book in books:
         if genre_title == book["genre"]:
             books_by_genre.append(book)
     if books_by_genre:
-        return render(request, 'library/genre_by_id.html', context={"books": books_by_genre})
+        return render(request, 'library/genre_by_id.html', context={"books": books_by_genre, "title": genre_title})
     raise Http404("Genre not found")
