@@ -108,7 +108,6 @@ list_genre = [{"IDGenre": 1, "title": "Fiction"},
 
 data = {"books": books,
         "title": "Library", 
-        "menu": menu,
         "authors": get_authors()}
 
 
