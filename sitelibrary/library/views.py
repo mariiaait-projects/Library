@@ -95,15 +95,22 @@ def get_authors():
     return authors_data
 
 
-menu = [{"title": "Home", "URL": "home"}, {"title": "About", "URL": "about"}, {"title": "Authors", "URL": "authors"},
-        {"title": "Genres", "URL": "genres"}, {"title": "Log in", "URL": "log_in"}]
+menu = [{"title": "Home", "URL": "home"},
+        {"title": "About", "URL": "about"},
+        {"title": "Authors", "URL": "authors"},
+        {"title": "Genres", "URL": "genres"},
+        {"title": "Log in", "URL": "log_in"}]
 
 list_genre = [{"IDGenre": 1, "title": "Fiction"},
               {"IDGenre": 2, "title": "Science"},
               {"IDGenre": 3, "title": "Technology"},
               {"IDGenre": 4, "title": "Fantasy"}]
 
-data = {"books": books, "title": "Library", "menu": menu, "authors": get_authors(), "genres": list_genre}
+data = {"books": books,
+        "title": "Library", 
+        "menu": menu,
+        "authors": get_authors(),
+        "genres": list_genre}
 
 
 # Create your views here.
