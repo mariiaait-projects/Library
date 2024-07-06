@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
+from library.models import Book
 
 books = [
     {
@@ -113,7 +114,8 @@ data = {"books": books,
 
 # Create your views here.
 def index(request):
-    return render(request, 'library/index.html', context=data)
+    context = {'books': Book.objects.all()}
+    return render(request, 'library/index.html', context=context)
 
 
 def about(request):
