@@ -1,6 +1,6 @@
-from django.db import models
-
 # Create your models here.
+
+from django.db import models
 class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
@@ -10,3 +10,7 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.author}"
+
+    class Meta:
+        ordering = ["published_year"]
+        indexes = [models.Index(fields=["published_year"])]
