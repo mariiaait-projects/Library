@@ -12,3 +12,13 @@ def get_genres():
 @register.simple_tag()
 def get_menu():
     return views.menu
+
+
+@register.simple_tag()
+def get_authors():
+    return views.get_authors()
+
+
+@register.simple_tag()
+def get_books():
+    return views.books

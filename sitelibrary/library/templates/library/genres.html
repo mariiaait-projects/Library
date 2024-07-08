@@ -2,10 +2,9 @@
 {% load tags %}
 {%block content%}
     <h2> Genres </h2>
-    {% get_genres as genres %}
-    <ol>
+    <ol class="wight-colored-list">
     {% for genre in genres %}
-       <li> <a href="{%url 'genre_by_id' genre.IDGenre%}"> {{ genre.title }} </a> </li>
-        {% endfor %}
+        <li><p>{{genre}}</p></li>
+    {% endfor %}
     </ol>
 {%endblock%}

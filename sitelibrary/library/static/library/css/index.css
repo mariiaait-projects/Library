@@ -36,3 +36,17 @@ li p{
     margin: 5px 0 5px;
     color: #555;
 }
+
+.wight-colored-list{
+    counter-reset: item;
+    list-style-type: none;
+}
+
+.wight-colored-list li{
+    counter-increment: item;
+}
+
+.wight-colored-list li::before{
+    content: counter(item) ".";
+    color: white;
+}

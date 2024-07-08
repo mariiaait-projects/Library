@@ -1,7 +1,8 @@
 {%extends 'base.html'%}
-
+{%load tags%}
 {%block content%}
 <h1>{{ title }}</h1>
+{%get_books as books%}
 <ul>
 {%for book in books%}
     <li>

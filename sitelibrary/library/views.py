@@ -2,17 +2,6 @@ from django.http import Http404
 from django.shortcuts import render
 from library.models import Book
 
-
-# def get_authors():
-#     authors_data = []
-#
-#     for book in books:
-#         author = book["author"]
-#         if not any(map(lambda data: data["author"] == author, authors_data)):
-#             authors_data.append({"author": book["author"]})
-#     return authors_data
-
-
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
         {"title": "Authors", "URL": "authors"},
@@ -23,6 +12,7 @@ list_genre = [{"IDGenre": 1, "title": "Fiction"},
               {"IDGenre": 2, "title": "Science"},
               {"IDGenre": 3, "title": "Technology"},
               {"IDGenre": 4, "title": "Fantasy"}]
+
 
 # data = {"books": books,
 #         "title": "Library",
@@ -45,12 +35,12 @@ def authors(request):
 
 
 def genres(request):
-    return render(request, 'library/genres.html')
+    context = {'genres': Book.objects.values_list("genre", flat=True).distinct()}
+    return render(request, 'library/genres.html', context=context)
 
 
 def log_in(request):
     return render(request, 'library/log_in.html')
-
 
 # def book_by_id(request, IDBook):
 #     for book in books:
