@@ -21,3 +21,10 @@ print(Book.objects.all())
 # book.title = "ROBOCOP"
 # book.save()
 print(Book.objects.filter(ISBN="9780345339683").update(title="ROBOCOP"))
+
+print(Book.objects.filter(author='Charlotte Bronte').update(genre='Mystery'))
+
+books = Book.objects.filter(published_year__lt=2000)
+for book in books:
+    book.genre = 'Классическая литература: ' + book.genre
+    book.save()
