@@ -2,7 +2,7 @@ body{
     margin: 20px;
     background-color: #2E2300;
 }
-h1{
+h1, h2{
     text-align: center;
     margin-bottom: 40px;
     color: white;

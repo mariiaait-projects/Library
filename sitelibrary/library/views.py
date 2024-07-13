@@ -8,39 +8,34 @@ menu = [{"title": "Home", "URL": "home"},
         {"title": "Genres", "URL": "genres"},
         {"title": "Log in", "URL": "log_in"}]
 
-list_genre = [{"IDGenre": 1, "title": "Fiction"},
-              {"IDGenre": 2, "title": "Science"},
-              {"IDGenre": 3, "title": "Technology"},
-              {"IDGenre": 4, "title": "Fantasy"}]
-
-
-# data = {"books": books,
-#         "title": "Library",
-#         "authors": get_authors()}
-
 
 # Create your views here.
 def index(request):
-    context = {'books': Book.objects.all()}
+    context = {"title": "Library", 'books': Book.objects.all()}
     return render(request, 'library/index.html', context=context)
 
 
 def about(request):
-    return render(request, 'library/about.html')
+    context = {"title": "About"}
+    return render(request, 'library/about.html', context=context)
 
 
 def authors(request):
-    context = {'authors': Book.objects.values_list("author", flat=True).distinct()}
+    authors_data = Book.objects.values_list("author", flat=True).distinct()
+    context = {"title": "Authors", 'authors': authors_data}
     return render(request, 'library/authors.html', context=context)
 
 
 def genres(request):
-    context = {'genres': Book.objects.values_list("genre", flat=True).distinct()}
+    genres = Book.objects.values_list("genre", flat=True)
+    context = {"title": "Genres", 'genres': set(genres)}
     return render(request, 'library/genres.html', context=context)
 
 
 def log_in(request):
-    return render(request, 'library/log_in.html')
+    context = {"title": "Log in"}
+    return render(request, 'library/log_in.html', context=context)
+
 
 def book_by_id(request, id):
     if Book.objects.filter(id=id).exists():
@@ -48,7 +43,6 @@ def book_by_id(request, id):
         context = {'book': book}
         return render(request, 'library/book_by_id.html', context=context)
     raise Http404("Book not found")
-
 
 # def genre_by_id(request, IDGenre):
 #     books_by_genre = []
