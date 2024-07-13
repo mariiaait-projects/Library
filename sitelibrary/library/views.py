@@ -42,11 +42,12 @@ def genres(request):
 def log_in(request):
     return render(request, 'library/log_in.html')
 
-# def book_by_id(request, IDBook):
-#     for book in books:
-#         if book["IDBook"] == IDBook:
-#             return render(request, 'library/book_by_id.html', context=book)
-#     raise Http404("Book not found")
+def book_by_id(request, id):
+    if Book.objects.filter(id=id).exists():
+        book = Book.objects.get(id=id)
+        context = {'book': book}
+        return render(request, 'library/book_by_id.html', context=context)
+    raise Http404("Book not found")
 
 
 # def genre_by_id(request, IDGenre):

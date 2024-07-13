@@ -8,7 +8,7 @@ django.setup()
 from library.models import Book
 
 # print(Book.objects.all().order_by('published_year'))
-print(Book.objects.all())
+# print(Book.objects.all())
 #
 # print(Book.objects.filter(genre = "Romance"))
 #
@@ -42,11 +42,13 @@ print(Book.objects.all())
 # import datetime
 # Book.objects.filter(title__icontains='great').update(published_year=datetime.datetime.now().year)
 
-Book.objects.filter(genre="").update(genre="данных нЄма")
+# Book.objects.filter(genre="").update(genre="данных нЄма")
+#
+# Book.objects.filter(published_year__lt=1940).delete()
+#
+# Book.objects.filter(genre="данных нЄма").delete()
 
-Book.objects.filter(published_year__lt=1940).delete()
-
-Book.objects.filter(genre="данных нЄма").delete()
+# print(Book.objects.all())
 
 
 
