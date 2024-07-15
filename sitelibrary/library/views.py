@@ -1,6 +1,7 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from library.models import Book
+from library.forms import BookForm
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -46,7 +47,14 @@ def book_by_id(request, id):
     raise Http404("Book not found")
 
 def create_book(request):
-
+    if request.method=="POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            return redirect('book_by_id', id=book.id)
+    else:
+        form = BookForm()
+    return render(request, 'library/book_form.html', context={"form":form})
 
 # def genre_by_id(request, IDGenre):
 #     books_by_genre = []
