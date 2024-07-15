@@ -6,6 +6,7 @@ menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
         {"title": "Authors", "URL": "authors"},
         {"title": "Genres", "URL": "genres"},
+        {"title": "Create book", "URL": "create_book"},
         {"title": "Log in", "URL": "log_in"}]
 
 
@@ -43,6 +44,9 @@ def book_by_id(request, id):
         context = {'book': book}
         return render(request, 'library/book_by_id.html', context=context)
     raise Http404("Book not found")
+
+def create_book(request):
+
 
 # def genre_by_id(request, IDGenre):
 #     books_by_genre = []
