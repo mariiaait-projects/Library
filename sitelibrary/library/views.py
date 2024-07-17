@@ -46,21 +46,25 @@ def book_by_id(request, id):
         return render(request, 'library/book_by_id.html', context=context)
     raise Http404("Book not found")
 
+
 def create_book(request):
-    if request.method=="POST":
+    if request.method == "POST":
         form = BookForm(request.POST)
         if form.is_valid():
             book = form.save()
             return redirect('book_by_id', id=book.id)
     else:
         form = BookForm()
-    return render(request, 'library/book_form.html', context={"form":form})
+    return render(request, 'library/book_form.html', context={"form": form})
+
 
 def update_book(request, id):
     book = get_object_or_404(Book, id=id)
-    if request.method=="POST":
-        pass
-
+    if request.method == "POST":
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            book = form.save()
+            return redirect('book_by_id', id=book.id)
 
 # def genre_by_id(request, IDGenre):
 #     books_by_genre = []
