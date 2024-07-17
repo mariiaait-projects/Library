@@ -69,6 +69,11 @@ def update_book(request, id):
         form = BookForm(instance=book)
         return render(request, 'library/book_form.html', context={"form": form})
 
+def delete_book(request, id):
+    book = get_object_or_404(Book, id=id)
+    book.delete()
+    return redirect('home')
+
 # def genre_by_id(request, IDGenre):
 #     books_by_genre = []
 #     genre_title = ""
