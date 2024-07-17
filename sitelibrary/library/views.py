@@ -65,6 +65,9 @@ def update_book(request, id):
         if form.is_valid():
             book = form.save()
             return redirect('book_by_id', id=book.id)
+    else:
+        form = BookForm(instance=book)
+        return render(request, 'library/book_form.html', context={"form": form})
 
 # def genre_by_id(request, IDGenre):
 #     books_by_genre = []
