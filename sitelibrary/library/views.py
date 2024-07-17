@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book
 from library.forms import BookForm
 
@@ -55,6 +55,12 @@ def create_book(request):
     else:
         form = BookForm()
     return render(request, 'library/book_form.html', context={"form":form})
+
+def update_book(request, id):
+    book = get_object_or_404(Book, id=id)
+    if request.method=="POST":
+        pass
+
 
 # def genre_by_id(request, IDGenre):
 #     books_by_genre = []

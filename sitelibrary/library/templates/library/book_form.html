@@ -1,5 +1,13 @@
 {%extends 'base.html'%}
 {%block content%}
+<h2>
+    {% if form.instance.pk %}
+    Update
+    {% else %}
+    Create
+    {% endif %}
+    book
+</h2>
 <form method="POST">
     {%csrf_token%}
     {{form.as_p}}
