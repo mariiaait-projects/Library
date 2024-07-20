@@ -14,3 +14,15 @@ class Book(models.Model):
     class Meta:
         ordering = ["published_year"]
         indexes = [models.Index(fields=["published_year"])]
+
+class Author(models.Model):
+    name = models.CharField(max_length=100, db_index=True)
+
+    def __str__(self):
+        return self.name
+
+class Genre(models.Model):
+    genre = models.CharField(max_length=100, db_index=True)
+
+    def __str__(self):
+        return self.genre
