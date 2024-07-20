@@ -8,4 +8,8 @@
         <li>Genre: {{ book.genre }}</li>
         <li>ISBN: {{ book.ISBN }}</li>
     </ul>
+    <div class="button">
+        <a href="{% url 'update_book' book.id %}">Update book</a>
+        <a href="{% url 'delete_book' book.id %}">Delete book</a>
+    </div>
 {%endblock%}
