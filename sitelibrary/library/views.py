@@ -14,6 +14,7 @@ menu = [{"title": "Home", "URL": "home"},
 # Create your views here.
 def index(request):
     context = {"title": "Library", 'books': Book.objects.all()}
+    print(Book.objects.all())
     return render(request, 'library/index.html', context=context)
 
 
