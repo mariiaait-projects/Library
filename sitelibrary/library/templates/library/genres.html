@@ -2,9 +2,10 @@
 {% load tags %}
 {%block content%}
     <h2> {{title}} </h2>
-    <ol class="wight-colored-list">
+    <ul class="wight-colored-list">
     {% for genre in genres %}
-        <li><p>{{genre}}</p></li>
+        <li>{{genre}}</li>
+        <hr>
     {% endfor %}
-    </ol>
+    </ul>
 {%endblock%}

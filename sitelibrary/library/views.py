@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from library.models import Book
+from library.models import Book, Genre, Author
 from library.forms import BookForm
 
 menu = [{"title": "Home", "URL": "home"},
@@ -24,14 +24,14 @@ def about(request):
 
 
 def authors(request):
-    authors_data = Book.objects.values_list("author", flat=True).distinct()
+    authors_data = Author.objects.values_list("name", flat=True)
     context = {"title": "Authors", 'authors': authors_data}
     return render(request, 'library/authors.html', context=context)
 
 
 def genres(request):
-    genres = Book.objects.values_list("genre", flat=True)
-    context = {"title": "Genres", 'genres': set(genres)}
+    genres_data = Genre.objects.values_list('genre', flat=True)
+    context = {"title": "Genres", 'genres': genres_data}
     return render(request, 'library/genres.html', context=context)
 
 
@@ -75,16 +75,6 @@ def delete_book(request, id):
     book.delete()
     return redirect('home')
 
-# def genre_by_id(request, IDGenre):
-#     books_by_genre = []
-#     genre_title = ""
-#     for genre in list_genre:
-#         if genre["IDGenre"] == IDGenre:
-#             genre_title = genre["title"]
-#             break
-#     for book in books:
-#         if genre_title == book["genre"]:
-#             books_by_genre.append(book)
-#     if books_by_genre:
-#         return render(request, 'library/genre_by_id.html', context={"books": books_by_genre, "title": genre_title})
-#     raise Http404("Genre not found")
+def genre_by_id(request, id):
+    books = Book.objects.filter(genre_id = id)
+    print(books)
