@@ -3,8 +3,8 @@
 {%block content%}
     <h2> {{title}} </h2>
     <ul class="wight-colored-list">
-    {% for genre in genres %}
-        <li>{{genre}}</li>
+    {% for id, genre in genres %}
+        <li><a href="{% url 'genre_by_id' id %}"> {{genre}} </a></li>
         <hr>
     {% endfor %}
     </ul>
