@@ -3,7 +3,10 @@
     <h2>{{title}}</h2>
     <ul>
         {%for author in authors%}
-        <li>{{author}}</li>
+        <li><a href="{% url 'author_by_id' author.id %}"> {{author.name}} </a> <br>
+            <a href="{% url 'update_author' author.id %}"> Update author </a> |
+            <a href="{% url 'delete_author' author.id %}"> Delete author </a>
+        </li>
         <hr>
         {%endfor%}
     </ul>

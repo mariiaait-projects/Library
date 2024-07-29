@@ -1,13 +1,15 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author
-from library.forms import BookForm
+from library.forms import BookForm, GenreForm, AuthorForm
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
         {"title": "Authors", "URL": "authors"},
         {"title": "Genres", "URL": "genres"},
         {"title": "Create book", "URL": "create_book"},
+        {"title": "Create genre", "URL": "create_genre"},
+        {"title": "Create author", "URL": "create_author"},
         {"title": "Log in", "URL": "log_in"}]
 
 
@@ -24,8 +26,8 @@ def about(request):
 
 
 def authors(request):
-    authors_data = Author.objects.values_list("name", flat=True)
-    context = {"title": "Authors", 'authors': authors_data}
+    authors = Author.objects.all()
+    context = {"title": "Authors", 'authors': authors}
     return render(request, 'library/authors.html', context=context)
 
 
@@ -70,7 +72,6 @@ def update_book(request, id):
         form = BookForm(instance=book)
         return render(request, 'library/book_form.html', context={"form": form})
 
-
 def delete_book(request, id):
     book = get_object_or_404(Book, id=id)
     book.delete()
@@ -82,3 +83,60 @@ def genre_by_id(request, id):
     title = Genre.objects.get(id=id)
     context = {"title": title, "books": books}
     return render(request, 'library/genre_by_id.html', context=context)
+
+def create_genre(request):
+    if request.method == "POST":
+        form = GenreForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('genres')
+    else:
+        form = GenreForm()
+    return render(request, 'library/genre_form.html', context={"form": form})
+
+def update_genre(request, id):
+    genre = get_object_or_404(Genre, id=id)
+    if request.method == "POST":
+        form = GenreForm(request.POST, instance=genre)
+        if form.is_valid():
+            form.save()
+            return redirect('genres')
+    else:
+        form = GenreForm(instance=genre)
+        return render(request, 'library/genre_form.html', context={"form": form})
+
+def delete_genre(request,id):
+    genre = get_object_or_404(Genre, id=id)
+    genre.delete()
+    return redirect('genres')
+
+def author_by_id(request, id):
+    books = Book.objects.filter(author_id=id)
+    title = Author.objects.get(id=id)
+    context = {"title": title, "books": books}
+    return render(request, 'library/author_by_id.html', context=context)
+def create_author(request):
+    if request.method == "POST":
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('authors')
+    else:
+        form = AuthorForm()
+    return render(request, 'library/author_form.html', context={"form": form})
+
+def update_author(request, id):
+    author = get_object_or_404(Author, id=id)
+    if request.method == "POST":
+        form = AuthorForm(request.POST, instance=author)
+        if form.is_valid():
+            form.save()
+            return redirect('authors')
+    else:
+        form = AuthorForm(instance=author)
+        return render(request, 'library/author_form.html', context={"form": form})
+
+def delete_author(request,id):
+    author = get_object_or_404(Author, id=id)
+    author.delete()
+    return redirect('authors')
