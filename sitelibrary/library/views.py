@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author
-from library.forms import BookForm
+from library.forms import BookForm, GenreForm
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -82,3 +82,29 @@ def genre_by_id(request, id):
     title = Genre.objects.get(id=id)
     context = {"title": title, "books": books}
     return render(request, 'library/genre_by_id.html', context=context)
+
+def create_genre(request):
+    if request.method == "POST":
+        form = GenreForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('genres')
+    else:
+        form = GenreForm()
+    return render(request, 'library/genre_form.html', context={"form": form})
+
+def update_genre(request, id):
+    genre = get_object_or_404(Genre, id=id)
+    if request.method == "POST":
+        form = GenreForm(request.POST, instance=genre)
+        if form.is_valid():
+            form.save()
+            return redirect('genres')
+    else:
+        form = GenreForm(instance=genre)
+        return render(request, 'library/genre_form.html', context={"form": form})
+
+def delete_genre(request,id):
+    genre = get_object_or_404(Genre, id=id)
+    genre.delete()
+    return redirect('genres')
