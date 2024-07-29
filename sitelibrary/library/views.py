@@ -8,6 +8,7 @@ menu = [{"title": "Home", "URL": "home"},
         {"title": "Authors", "URL": "authors"},
         {"title": "Genres", "URL": "genres"},
         {"title": "Create book", "URL": "create_book"},
+        {"title": "Create genre", "URL": "create_genre"},
         {"title": "Log in", "URL": "log_in"}]
 
 
@@ -69,7 +70,6 @@ def update_book(request, id):
     else:
         form = BookForm(instance=book)
         return render(request, 'library/book_form.html', context={"form": form})
-
 
 def delete_book(request, id):
     book = get_object_or_404(Book, id=id)
