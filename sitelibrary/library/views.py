@@ -30,10 +30,8 @@ def authors(request):
 
 
 def genres(request):
-    genres_data = {}
-    for genre in Genre.objects.all():
-        genres_data[genre.id] = genre.genre
-    context = {"title": "Genres", 'genres': genres_data.items()}
+    genres = Genre.objects.all()
+    context = {"title": "Genres", 'genres': genres}
     return render(request, 'library/genres.html', context=context)
 
 
@@ -72,13 +70,15 @@ def update_book(request, id):
         form = BookForm(instance=book)
         return render(request, 'library/book_form.html', context={"form": form})
 
+
 def delete_book(request, id):
     book = get_object_or_404(Book, id=id)
     book.delete()
     return redirect('home')
 
+
 def genre_by_id(request, id):
-    books = Book.objects.filter(genre_id = id)
+    books = Book.objects.filter(genre_id=id)
     title = Genre.objects.get(id=id)
     context = {"title": title, "books": books}
     return render(request, 'library/genre_by_id.html', context=context)

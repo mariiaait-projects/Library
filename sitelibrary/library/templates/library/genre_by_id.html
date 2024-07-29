@@ -3,7 +3,7 @@
     <h2> {{ title }} </h2>
     <ul>
     {% for book in books %}
-       <li> <a href="{%url 'book_by_id' book.id}"> {{ book.title }} </a> </li>
+       <li> <a href="{%url 'book_by_id' book.id %}"> {{ book.title }} </a> </li>
         {% endfor %}
     </ul>
 {%endblock%}
