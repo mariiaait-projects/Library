@@ -139,3 +139,4 @@ def delete_author(request,id):
     author = get_object_or_404(Author, id=id)
     author.delete()
     return redirect('authors')
+
