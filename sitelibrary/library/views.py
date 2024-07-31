@@ -43,8 +43,8 @@ def log_in(request):
 
 def book_by_id(request, id):
     book = get_object_or_404(Book, id=id)
-    BookAuthor.objects.filter(book=book)
-    context = {'book': book}
+    authors = BookAuthor.objects.filter(book=book)
+    context = {'book': book, 'authors': authors}
     return render(request, 'library/book_by_id.html', context=context)
 
 
@@ -110,7 +110,7 @@ def delete_genre(request,id):
     return redirect('genres')
 
 def author_by_id(request, id):
-    books = Book.objects.filter(author_id=id)
+    books = Book.objects.filter(authors_id=id)
     title = Author.objects.get(id=id)
     context = {"title": title, "books": books}
     return render(request, 'library/author_by_id.html', context=context)

@@ -34,3 +34,5 @@ class BookAuthor(models.Model):
     class Meta:
         unique_together = ('book', 'author')
 
+    # def __str__(self):
+    #     return f"{self.author}"

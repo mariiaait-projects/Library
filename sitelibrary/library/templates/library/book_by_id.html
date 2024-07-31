@@ -3,7 +3,12 @@
     <h2 class="content-name"> {{ book.title }}</h2>
     <hr>
     <ul>
-        <li>Author: {{ book.author }}</li>
+        <li>Authors:
+            {% for author in authors %}
+<!--            <a href="{% url 'author_by_id' author.id %}"> {{author.author}} </a>-->
+            {{author.author}}
+            {% endfor %}
+        </li>
         <li>Year: {{ book.published_year }}</li>
         <li>Genre: {{ book.genre }}</li>
         <li>ISBN: {{ book.ISBN }}</li>
