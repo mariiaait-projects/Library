@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author
-from library.forms import BookForm, GenreForm, AuthorForm
+from library.forms import BookForm, GenreForm
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -9,13 +9,13 @@ menu = [{"title": "Home", "URL": "home"},
         {"title": "Genres", "URL": "genres"},
         {"title": "Create book", "URL": "create_book"},
         {"title": "Create genre", "URL": "create_genre"},
-        {"title": "Create author", "URL": "create_author"},
         {"title": "Log in", "URL": "log_in"}]
 
 
 # Create your views here.
 def index(request):
     context = {"title": "Library", 'books': Book.objects.all()}
+    print(Book.objects.all())
     return render(request, 'library/index.html', context=context)
 
 
@@ -25,8 +25,8 @@ def about(request):
 
 
 def authors(request):
-    authors = Author.objects.all()
-    context = {"title": "Authors", 'authors': authors}
+    authors_data = Author.objects.values_list("name", flat=True)
+    context = {"title": "Authors", 'authors': authors_data}
     return render(request, 'library/authors.html', context=context)
 
 
@@ -108,34 +108,3 @@ def delete_genre(request,id):
     genre = get_object_or_404(Genre, id=id)
     genre.delete()
     return redirect('genres')
-
-def author_by_id(request, id):
-    books = Book.objects.filter(author_id=id)
-    title = Author.objects.get(id=id)
-    context = {"title": title, "books": books}
-    return render(request, 'library/author_by_id.html', context=context)
-def create_author(request):
-    if request.method == "POST":
-        form = AuthorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('authors')
-    else:
-        form = AuthorForm()
-    return render(request, 'library/author_form.html', context={"form": form})
-
-def update_author(request, id):
-    author = get_object_or_404(Author, id=id)
-    if request.method == "POST":
-        form = AuthorForm(request.POST, instance=author)
-        if form.is_valid():
-            form.save()
-            return redirect('authors')
-    else:
-        form = AuthorForm(instance=author)
-        return render(request, 'library/author_form.html', context={"form": form})
-
-def delete_author(request,id):
-    author = get_object_or_404(Author, id=id)
-    author.delete()
-    return redirect('authors')
