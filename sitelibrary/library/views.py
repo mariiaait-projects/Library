@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from library.models import Book, Genre, Author
+from library.models import Book, Genre, Author, BookAuthor
 from library.forms import BookForm, GenreForm, AuthorForm
 
 menu = [{"title": "Home", "URL": "home"},
@@ -42,11 +42,11 @@ def log_in(request):
 
 
 def book_by_id(request, id):
-    if Book.objects.filter(id=id).exists():
-        book = Book.objects.get(id=id)
-        context = {'book': book}
-        return render(request, 'library/book_by_id.html', context=context)
-    raise Http404("Book not found")
+    book = get_object_or_404(Book, id=id)
+    BookAuthor.objects.filter(book=book)
+    context = {'book': book}
+    return render(request, 'library/book_by_id.html', context=context)
+
 
 
 def create_book(request):
