@@ -110,9 +110,9 @@ def delete_genre(request,id):
     return redirect('genres')
 
 def author_by_id(request, id):
-    books = Book.objects.filter(authors_id=id)
-    title = Author.objects.get(id=id)
-    context = {"title": title, "books": books}
+    author = get_object_or_404(Author, id=id)
+    books = Book.objects.filter(authors__id=author.id)
+    context = {"title": author.name, "books": books}
     return render(request, 'library/author_by_id.html', context=context)
 def create_author(request):
     if request.method == "POST":

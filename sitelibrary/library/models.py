@@ -9,7 +9,7 @@ class Book(models.Model):
     ISBN = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"{self.title} by {self.author}"
+        return f"{self.title}"
 
     class Meta:
         ordering = ["published_year"]
