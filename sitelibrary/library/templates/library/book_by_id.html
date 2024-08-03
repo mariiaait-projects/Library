@@ -3,10 +3,12 @@
     <h2 class="content-name"> {{ book.title }}</h2>
     <hr>
     <ul>
-        <li>Authors:
+        <li>
+            Authors:
+             <br>
             {% for author in authors %}
-<!--            <a href="{% url 'author_by_id' author.id %}"> {{author.author}} </a>-->
-            {{author.author}}
+                <a href="{% url 'author_by_id' author.id %}"> {{author.author}} </a>
+                <br>
             {% endfor %}
         </li>
         <li>Year: {{ book.published_year }}</li>
