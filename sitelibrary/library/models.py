@@ -41,7 +41,7 @@ class BookAuthor(models.Model):
 
 class Cart(models.Model):
     book = models.ForeignKey('Book', on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(default=1)
 
 
 
