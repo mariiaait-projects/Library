@@ -7,7 +7,7 @@
             Authors:
              <br>
             {% for author in authors %}
-                <a href="{% url 'author_by_id' author.id %}"> {{author.author}} </a>
+                <a href="{% url 'author_by_id' author.id %}"> {{author.name}} </a>
                 <br>
             {% endfor %}
         </li>

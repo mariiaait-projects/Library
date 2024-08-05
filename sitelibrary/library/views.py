@@ -43,7 +43,8 @@ def log_in(request):
 
 def book_by_id(request, id):
     book = get_object_or_404(Book, id=id)
-    authors = BookAuthor.objects.filter(book=book)
+    authors_ids = BookAuthor.objects.filter(book_id=book.id).values_list('author', flat=True)
+    authors = Author.objects.filter(id__in=authors_ids)
     context = {'book': book, 'authors': authors}
     return render(request, 'library/book_by_id.html', context=context)
 
