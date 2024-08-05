@@ -19,4 +19,6 @@ urlpatterns = [
     path('authors/create/', views.create_author, name='create_author'),
     path('authors/update/<int:id>', views.update_author, name='update_author'),
     path('authors/delete/<int:id>', views.delete_author, name='delete_author'),
+    path('books/buy/<int:id>', views.buy_book, name='buy_book'),
+    #path('cart/', views.get_cart, name='get_cart'),
 ]

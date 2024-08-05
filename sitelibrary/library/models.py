@@ -7,6 +7,7 @@ class Book(models.Model):
     genre = models.ForeignKey('Genre', on_delete=models.CASCADE, null=True)
     published_year = models.IntegerField()
     ISBN = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
 
     def __str__(self):
         return f"{self.title}"
@@ -36,3 +37,11 @@ class BookAuthor(models.Model):
 
     # def __str__(self):
     #     return f"{self.author}"
+
+
+class Cart(models.Model):
+    book = models.ForeignKey('Book', on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+
+
+

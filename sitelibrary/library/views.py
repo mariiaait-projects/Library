@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from library.models import Book, Genre, Author, BookAuthor
+from library.models import Book, Genre, Author, BookAuthor, Cart
 from library.forms import BookForm, GenreForm, AuthorForm
 
 menu = [{"title": "Home", "URL": "home"},
@@ -114,6 +114,7 @@ def author_by_id(request, id):
     author = get_object_or_404(Author, id=id)
     books = Book.objects.filter(authors__id=author.id)
     context = {"title": author.name, "books": books}
+    print(books)
     return render(request, 'library/author_by_id.html', context=context)
 def create_author(request):
     if request.method == "POST":
@@ -140,4 +141,9 @@ def delete_author(request,id):
     author = get_object_or_404(Author, id=id)
     author.delete()
     return redirect('authors')
+
+def buy_book(request, id):
+    book = get_object_or_404(Book, id=id)
+    cart = Cart.objects.create(book=book)
+    return redirect('cart.html')
 
