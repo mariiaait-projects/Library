@@ -152,5 +152,9 @@ def get_cart(request):
     total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
     return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases, 'total': total})
 
-    
+def delete_product_from_cart(request, id):
+    product = get_object_or_404(Cart, id=id)
+    product.delete()
+    return redirect('get_cart')
+
 

@@ -7,6 +7,7 @@
             <th>Products</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -22,6 +23,9 @@
             <td>
                 {{purchase.book.price}}
             </td>
+            <td>
+                <a href="{% url 'delete_product_from_cart' purchase.id %}">Delete</a>
+            </td>
         </tr>
         {% endfor %}
         </tbody>
@@ -30,6 +34,7 @@
                 <td></td>
                 <td></td>
                 <td><strong>{{ total }}</strong></td>
+                <td></td>
             </tr>
         </tfoot>
     </table>
