@@ -149,5 +149,8 @@ def buy_book(request, id):
 
 def get_cart(request):
     purchases = Cart.objects.all()
+    total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
+    return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases, 'total': total})
+
     
 

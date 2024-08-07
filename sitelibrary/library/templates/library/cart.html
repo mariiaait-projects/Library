@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{%block content%}
+    <h2>{{title}}</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Products</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for purchase in purchases %}
+        <tr>
+            <td>
+                <a href="{% url 'book_by_id' purchase.book.id %}">{{purchase.book.title}}</a>
+            </td>
+            <td>
+                {{ purchase.quantity }}
+            </td>
+            <td>
+                {{purchase.book.price}}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><strong>{{ total }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+{%endblock%}
