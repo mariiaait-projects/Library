@@ -1,3 +1,7 @@
+:root {
+    --white-text: #FFF;
+}
+
 body{
     margin: 20px;
     background-color: #f8f9fa;
@@ -24,5 +28,15 @@ h1, h2{
 }
 
 .navbar{
-    background-color:#333333
+    background-color:#333333;
+    box-shadow: 1px 0 3px rgb(0, 0, 0);
+}
+
+.navbar-nav, .nav-link {
+    color: var(--white-text);
+    font-weight: 500;
+}
+
+.nav-item {
+    margin-right: 15px;
 }
