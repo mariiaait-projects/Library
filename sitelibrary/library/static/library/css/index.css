@@ -7,35 +7,6 @@ h1, h2{
     margin-bottom: 40px;
     color: white;
 }
-ul{
-    list-style-type: none;
-    padding: 0px;
-}
-li{
-    background: #FFF;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    padding: 20px;
-    transition: background;
-}
-li:hover{
-    background: #F9F9F9
-}
-li h2{
-    margin: 0 0 10px;
-}
-li a{
-    text-decoration: none;
-    color: #000;
-    transition: color;
-}
-li a:hover{
-    color: #333030;
-}
-li p{
-    margin: 5px 0 5px;
-    color: #555;
-}
 
 .wight-colored-list{
     counter-reset: item;
@@ -46,7 +17,12 @@ li p{
     counter-increment: item;
 }
 
-.wight-colored-list li::before{
-    content: counter(item) ".";
-    color: white;
+.navbar-brand{
+    font-weight: bold;
+    color: #FFF;
+    font-size: 22px;
+}
+
+.navbar{
+    background-color:#333333
 }
