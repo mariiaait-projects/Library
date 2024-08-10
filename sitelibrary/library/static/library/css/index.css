@@ -37,6 +37,14 @@ h1, h2{
     font-weight: 500;
 }
 
+.container-logo {
+    width: 300px;
+}
+
 .nav-item {
     margin-right: 15px;
+}
+
+main {
+    margin-top: 90px;
 }
