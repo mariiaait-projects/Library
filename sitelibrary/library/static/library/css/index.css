@@ -4,7 +4,7 @@
 
 body{
     margin: 20px;
-    background-color: #f8f9fa;
+    background-image: url("static/images/background.jpg");
 }
 h1, h2{
     text-align: center;
@@ -45,7 +45,12 @@ h1, h2{
     margin-right: 15px;
 }
 
-/*
-main {
-    margin-top: 90px;
-}*/
+.price-highlight{
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.card-shadow{
+    box-shadow: 0.5px 0 4px rgba(0, 0, 0, 0.5);
+}

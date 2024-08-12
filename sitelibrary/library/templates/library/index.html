@@ -4,12 +4,13 @@
     <div class="row">
         {%for book in books%}
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
+                <div class="card h-100 card-shadow">
                     <div class="card-body">
                         <h5><a href="{% url 'book_by_id' book.id %}">{{ book.title }}</a></h5>
                         <p class="card-text"><strong>Year:</strong> {{ book.published_year }}</p>
                         <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
-                        <p class="text-success">{{ book.price }} UAH</p>
+                        <p class="text-success price-highlight">{{ book.price }} UAH</p>
+                        <a href="{% url 'buy_book' book.id %}" class="btn btn-primary">Buy</a>
                     </div>
                 </div>
             </div>
