@@ -3,14 +3,15 @@
 <div class="container mt-5 pt-5">
     <div class="row">
         {%for book in books%}
-            <div>
-                <h2><a href="{% url 'book_by_id' book.id %}">{{ book.title }}</a></h2>
-                <p>Year: {{ book.published_year }}</p>
-                <p>Genre: {{ book.genre }}</p>
-                <p>ISBN: {{ book.ISBN }}</p>
-                {%if not forloop.last%}
-                <hr>
-                {%endif%}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5><a href="{% url 'book_by_id' book.id %}">{{ book.title }}</a></h5>
+                        <p class="card-text"><strong>Year:</strong> {{ book.published_year }}</p>
+                        <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
+                        <p class="text-success">{{ book.price }} UAH</p>
+                    </div>
+                </div>
             </div>
             {%endfor%}
     </div>
