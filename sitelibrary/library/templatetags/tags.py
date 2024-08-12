@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import template
 from library import views
 
@@ -22,3 +24,7 @@ def get_authors():
 @register.simple_tag()
 def get_books():
     return views.books
+
+@register.simple_tag()
+def get_year():
+    return datetime.now().year

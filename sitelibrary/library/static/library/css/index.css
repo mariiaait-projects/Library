@@ -1,5 +1,6 @@
 :root {
     --white-text: #FFF;
+    --black: #333333;
 }
 
 body{
@@ -28,7 +29,7 @@ h1, h2{
 }
 
 .navbar{
-    background-color:#333333;
+    background-color: var(--black);
     box-shadow: 1px 0 3px rgb(0, 0, 0);
 }
 
@@ -54,4 +55,13 @@ h1, h2{
 
 .card-shadow{
     box-shadow: 0.5px 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.footer-fill{
+    background-color: var(--black);
+    width: 100%;
+}
+
+.text-body-secondary{
+    color: var(--white-text);
 }
