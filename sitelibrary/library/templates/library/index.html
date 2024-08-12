@@ -1,16 +1,25 @@
 {%extends 'base.html'%}
 {%block content%}
+{% load static %}
 <div class="container mt-5 pt-5">
     <div class="row">
         {%for book in books%}
             <div class="col-md-4 mb-4">
                 <div class="card h-100 card-shadow">
+                    {% if book.image %}
+                        <img src="{% static 'library/images/{{ book.image }}' %}"
+                             class="card-img-top" alt="{{book.title}}">
+                    {% else %}
+                        <img src="{% static 'library/images/default-book.jpg' %}"
+                             class="card-img-top" alt="{{book.title}}">
+                    {% endif %}
+
                     <div class="card-body">
                         <h5><a href="{% url 'book_by_id' book.id %}">{{ book.title }}</a></h5>
                         <p class="card-text"><strong>Year:</strong> {{ book.published_year }}</p>
                         <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
-                        <p class="text-success price-highlight">{{ book.price }} UAH</p>
                         <a href="{% url 'buy_book' book.id %}" class="btn btn-primary">Buy</a>
+                        <p class="text-success price-highlight">{{ book.price }} UAH</p>
                     </div>
                 </div>
             </div>

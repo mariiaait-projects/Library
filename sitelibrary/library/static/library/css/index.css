@@ -4,7 +4,7 @@
 
 body{
     margin: 20px;
-    background-image: url("static/images/background.jpg");
+    background-image: url('library/static/images/background.jpg');
 }
 h1, h2{
     text-align: center;
@@ -48,7 +48,8 @@ h1, h2{
 .price-highlight{
     font-size: 1.25rem;
     font-weight: bold;
-    margin-left: 1rem;
+    float: right;
+    display: inline-block;
 }
 
 .card-shadow{
