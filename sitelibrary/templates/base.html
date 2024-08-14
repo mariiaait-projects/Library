@@ -34,16 +34,26 @@
     {%block content%}
     {%endblock%}
 </main>
-<div class="footer footer-fill">
+<div class="footer footer-fill mt-auto py-3">
     <div class="container">
-        <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
-            <div class="col mb-3">
+        <footer class="row">
+            <div class="col-md-3 mb-3">
                 <a class="d-flex align-items-center mb-3 link-body-emphasis navbar-brand"
-                   href="#">{{title}}</a>
+           href="#">{{title}}</a>
                 {% get_year as year %}
-                <p class="text-body-secondary">&copy;{{year}}</p>
+                <p class="text-light">&copy;{{year}}</p>
+                <div class="col-md-3 mb-3">
+                    <h5 class="text-white">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        {%for item in menu%}
+                        <li><a class="text-light" href="{%url item.URL%}">{{item.title}}</a></li>
+                        {%endfor%}
+                    </ul>
+                </div>
             </div>
+
         </footer>
+
     </div>
 </div>
 </body>
