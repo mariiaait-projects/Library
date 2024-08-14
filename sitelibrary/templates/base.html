@@ -40,7 +40,8 @@
             <div class="col mb-3">
                 <a class="d-flex align-items-center mb-3 link-body-emphasis navbar-brand"
                    href="#">{{title}}</a>
-                <p class="text-body-secondary">@{{ get_year }}</p>
+                {% get_year as year %}
+                <p class="text-body-secondary">&copy;{{year}}</p>
             </div>
         </footer>
     </div>
