@@ -26,6 +26,9 @@
                     <a class="nav-link" href="{%url item.URL%}"> {{item.title}}</a>
                 </li>
                 {%endfor%}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-bs-todo="dropdown" aria-expanded="false" href="#"></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -34,7 +37,7 @@
     {%block content%}
     {%endblock%}
 </main>
-<div class="footer footer-fill mt-auto py-3">
+<div class="footer footer-fill mt-4 py-3">
     <div class="container">
         <footer>
             <div class="row">

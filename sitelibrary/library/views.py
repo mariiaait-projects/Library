@@ -7,10 +7,11 @@ menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
         {"title": "Authors", "URL": "authors"},
         {"title": "Genres", "URL": "genres"},
-        {"title": "Create book", "URL": "create_book"},
-        {"title": "Create genre", "URL": "create_genre"},
-        {"title": "Create author", "URL": "create_author"},
         {"title": "Log in", "URL": "log_in"}]
+
+manage_menu = [{"title": "Create book", "URL": "create_book"},
+            {"title": "Create genre", "URL": "create_genre"},
+            {"title": "Create author", "URL": "create_author"}]
 
 
 # Create your views here.
