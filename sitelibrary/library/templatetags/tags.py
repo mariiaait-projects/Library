@@ -15,6 +15,10 @@ def get_genres():
 def get_menu():
     return views.menu
 
+@register.simple_tag()
+def get_manage_menu():
+    return views.manage_menu
+
 
 @register.simple_tag()
 def get_authors():

@@ -9,7 +9,6 @@
     <title>{{ title }}</title>
 </head>
 <body>
-{% get_menu as menu %}
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
         <div class="container-logo">
@@ -21,13 +20,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                {% get_menu as menu %}
                 {%for item in menu%}
                 <li class="nav-item">
                     <a class="nav-link" href="{%url item.URL%}"> {{item.title}}</a>
                 </li>
                 {%endfor%}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-bs-todo="dropdown" aria-expanded="false" href="#"></a>
+                    <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-expanded="false" href="#">Services</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbar-dropdown">
+                        {% get_manage_menu as manage_menu %}
+                        {% for item in manage_menu %}
+                        <li>
+                            <a class="dropdown-item" href="{%url item.URL%}"> {{item.title}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </li>
             </ul>
         </div>
