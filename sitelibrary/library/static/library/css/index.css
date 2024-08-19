@@ -34,6 +34,10 @@ h1, h2{
     box-shadow: 1px 0 3px rgb(0, 0, 0);
 }
 
+.nav-link{
+    color: var(--white-text) !important;
+}
+
 .navbar-nav, .nav-link {
     color: var(--white-text);
     font-weight: 500;
