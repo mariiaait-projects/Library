@@ -7,11 +7,11 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100 card-shadow">
                     {% if book.image %}
-                        <img src="{% static 'library/images/{{ book.image }}' %}"
-                             class="card-img-top" alt="{{book.title}}">
+                        <a href="{% url 'book_by_id' book.id %}"><img src="{% static 'library/images/{{ book.image }}' %}"
+                             class="card-img-top" alt="{{book.title}}"></a>
                     {% else %}
-                        <img src="{% static 'library/images/default-book.jpg' %}"
-                             class="card-img-top" alt="{{book.title}}">
+                        <a href="{% url 'book_by_id' book.id %}"><img src="{% static 'library/images/default-book.jpg' %}"
+                             class="card-img-top" alt="{{book.title}}"></a>
                     {% endif %}
 
                     <div class="card-body">
