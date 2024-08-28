@@ -23,8 +23,10 @@ class GenreForm(forms.ModelForm):
     class Meta:
         model = Genre
         fields = ['genre']
+        widgets = {'genre': forms.TextInput(attrs={'placeholder': 'Enter genre', "class": "form-control"})}
 
 class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
         fields = ['name']
+        widgets = {'name': forms.TextInput(attrs={'placeholder': 'Enter name', "class": "form-control"})}
