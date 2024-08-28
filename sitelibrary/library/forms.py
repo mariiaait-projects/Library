@@ -7,13 +7,16 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ['title', 'authors', 'published_year', 'genre', 'ISBN']
-        authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all(), widget=forms.CheckboxSelectMultiple,
+        authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all(), widget=forms.SelectMultiple,
                                                 required=True)
-        genre = forms.ModelChoiceField(queryset=Genre.objects.all(), widget=forms.Select, required=True)
+        genre = forms.ModelChoiceField(queryset=Genre.objects.all(), widget=forms.Select(attrs={'placeholder': 'Enter genre',
+                "class": "form-control"}), required=True)
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Enter book name', "class": "form-control"}),
-            'published_year': forms.NumberInput(attrs={'placeholder': 'Enter book\'s year'}),
-            'ISBN': forms.TextInput(attrs={'placeholder': 'Enter ISBN number'})
+            'published_year': forms.NumberInput(attrs={'placeholder': 'Enter book\'s year', "class": "form-control"}),
+            'ISBN': forms.TextInput(attrs={'placeholder': 'Enter ISBN-number', "class": "form-control"}),
+            'genre': forms.Select(attrs={'placeholder': 'Enter genre', "class": "form-control"}),
+            'authors': forms.SelectMultiple(attrs={'class': 'form-control'})
         }
 
 class GenreForm(forms.ModelForm):
