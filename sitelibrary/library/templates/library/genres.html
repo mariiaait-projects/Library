@@ -3,7 +3,7 @@
 {% load static %}
 {%block content%}
 <h2> {{title}} </h2>
-<div class="container mt-5 pt-5">
+<div class="container pt-5">
     <div class="row">
         {% for genre in genres %}
             <div class="col-md-4 mb-4">
@@ -15,7 +15,7 @@
                         <a href="{% url 'genre_by_id' genre.id %}"><img src="{% static 'library/images/default-book.jpg' %}"
                              class="card-img-top" alt="{{genre.title}}"></a>
                     {% endif %}
-                    <div class="card-body">
+                    <div class="card-body mt-n3">
                         <h5><a href="{% url 'genre_by_id' genre.id %}">{{ genre.genre }}</a></h5>
                         <a class="btn btn-success" href="{% url 'update_genre' genre.id %}"> Update genre </a>
                         <a class="btn btn-danger ml-2" href="{% url 'delete_genre' genre.id %}"> Delete genre </a>
