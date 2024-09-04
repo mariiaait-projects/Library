@@ -1,13 +1,27 @@
 {%extends 'base.html'%}
+{% load static %}
 {%block content%}
-    <h2>{{title}}</h2>
-    <ul>
+<h2>{{title}}</h2>
+<div class="container pt-5">
+    <div class="row">
         {%for author in authors%}
-        <li><a href="{% url 'author_by_id' author.id %}"> {{author.name}} </a> <br>
-            <a href="{% url 'update_author' author.id %}"> Update author </a> |
-            <a href="{% url 'delete_author' author.id %}"> Delete author </a>
-        </li>
-        <hr>
-        {%endfor%}
-    </ul>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 card-shadow">
+                    {% if author.image %}
+                        <a href="{% url 'author_by_id' author.id %}"><img src="{% static 'library/images/{{ author.image }}' %}"
+                             class="card-img-top" alt="{{author.name}}"></a>
+                    {% else %}
+                        <a href="{% url 'author_by_id' author.id %}"><img src="{% static 'library/images/default-book.jpg' %}"
+                             class="card-img-top" alt="{{author.name}}"></a>
+                    {% endif %}
+                    <div class="card-body mt-n3">
+                        <h5><a href="{% url 'author_by_id' author.id %}">{{ author.name }}</a></h5>
+                        <a class="btn btn-success" href="{% url 'update_author' author.id %}"> Update author </a>
+                        <a class="btn btn-danger ml-2" href="{% url 'delete_author' author.id %}"> Delete author </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {%endblock%}
