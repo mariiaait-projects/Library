@@ -87,3 +87,7 @@ h1, h2{
 .text-body-secondary{
     color: var(--white-text);
 }
+
+.cart-margin{
+    margin-top: 5rem;
+}

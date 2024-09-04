@@ -1,12 +1,12 @@
 {%extends 'base.html'%}
 {%block content%}
-    <h2>{{title}}</h2>
-    <table>
-        <thead>
+    <div class="container cart-margin">
+        <table class="table table-border table-striped">
+        <thead class="head-dark">
         <tr>
-            <th>Products</th>
-            <th>Quantity</th>
-            <th>Price</th>
+            <th scope="col">Products</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
             <th></th>
         </tr>
         </thead>
@@ -24,7 +24,7 @@
                 {{purchase.book.price}}
             </td>
             <td>
-                <a href="{% url 'delete_product_from_cart' purchase.id %}">Delete</a>
+                <a class="btn btn-primary" href="{% url 'delete_product_from_cart' purchase.id %}">Delete</a>
             </td>
         </tr>
         {% endfor %}
@@ -32,10 +32,11 @@
         <tfoot>
             <tr>
                 <td></td>
-                <td></td>
+                <td class="text-right"><strong>Total:</strong></td>
                 <td><strong>{{ total }}</strong></td>
                 <td></td>
             </tr>
         </tfoot>
     </table>
+    </div>
 {%endblock%}
