@@ -18,7 +18,6 @@
                         <h5><a href="{% url 'book_by_id' book.id %}">{{ book.title }}</a></h5>
                         <p class="card-text"><strong>Year:</strong> {{ book.published_year }}</p>
                         <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
-                        <a href="{% url 'buy_book' book.id %}" class="btn btn-primary">Buy</a>
                         <p class="text-success price-highlight">{{ book.price }} UAH</p>
                     </div>
                 </div>
