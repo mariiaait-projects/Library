@@ -1,5 +1,5 @@
 # Create your models here.
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 class Book(models.Model):
     title = models.CharField(max_length=100)
@@ -39,9 +39,11 @@ class BookAuthor(models.Model):
     #     return f"{self.author}"
 
 
-class Cart(models.Model):
-    book = models.ForeignKey('Book', on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
+# class Cart(models.Model):
+#     book = models.ForeignKey('Book', on_delete=models.CASCADE)
+#     quantity = models.IntegerField(default=1)
 
 
-
+class Coupon(models.Model):
+    name = models.CharField(max_length=100, db_index=True, unique=True)
+    discount = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])

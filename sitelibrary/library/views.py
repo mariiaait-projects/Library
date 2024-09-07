@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from library.models import Book, Genre, Author, BookAuthor, Cart
+from library.models import Book, Genre, Author, BookAuthor
 from library.forms import BookForm, GenreForm, AuthorForm
 
 menu = [{"title": "Home", "URL": "home"},
@@ -143,19 +143,19 @@ def delete_author(request,id):
     author.delete()
     return redirect('authors')
 
-def buy_book(request, id):
-    book = get_object_or_404(Book, id=id)
-    cart = Cart.objects.create(book=book)
-    return redirect('get_cart')
+# def buy_book(request, id):
+#     book = get_object_or_404(Book, id=id)
+#     cart = Cart.objects.create(book=book)
+#     return redirect('get_cart')
 
-def get_cart(request):
-    purchases = Cart.objects.all()
-    total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
-    return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases, 'total': total})
+# def get_cart(request):
+#     purchases = Cart.objects.all()
+#     total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
+#     return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases, 'total': total})
 
-def delete_product_from_cart(request, id):
-    product = get_object_or_404(Cart, id=id)
-    product.delete()
-    return redirect('get_cart')
+# def delete_product_from_cart(request, id):
+#     product = get_object_or_404(Cart, id=id)
+#     product.delete()
+#     return redirect('get_cart')
 
 
