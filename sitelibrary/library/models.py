@@ -1,4 +1,5 @@
 # Create your models here.
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 class Book(models.Model):
@@ -47,3 +48,14 @@ class BookAuthor(models.Model):
 class Coupon(models.Model):
     name = models.CharField(max_length=100, db_index=True, unique=True)
     discount = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
+
+class CartHeader(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True)
+
+class CartDetails(models.Model):
+    cart_header = models.ForeignKey(CartHeader, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+
+
