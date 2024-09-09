@@ -8,7 +8,7 @@ menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
         {"title": "Authors", "URL": "authors"},
         {"title": "Genres", "URL": "genres"},
-        {"title": "Log in", "URL": "log_in"}]
+        {"title": "Log in", "URL": "login"}]
 
 manage_menu = [{"title": "Create book", "URL": "create_book"},
             {"title": "Create genre", "URL": "create_genre"},
