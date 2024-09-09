@@ -1,7 +1,8 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author, BookAuthor
-from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm
+from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm
+from django.contrib.auth import authenticate, login, logout
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -35,11 +36,6 @@ def genres(request):
     genres = Genre.objects.all()
     context = {"title": "Genres", 'genres': genres}
     return render(request, 'library/genres.html', context=context)
-
-
-def log_in(request):
-    context = {"title": "Log in"}
-    return render(request, 'library/log_in.html', context=context)
 
 
 def book_by_id(request, id):
@@ -168,6 +164,19 @@ def register(request):
         form = UserRegistrationForm()
         return render(request, 'library/register_form.html', {'form': form})
 def login(request):
-    pass
+    if request.method == "POST":
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    else:
+        form = UserLoginForm()
+        return render(request, "library/loginform.html", {'form': form})
+
+
 
 
