@@ -164,7 +164,9 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect("login")
-
+    else:
+        form = UserRegistrationForm()
+        return render(request, 'library/register_form.html', {'form': form})
 def login(request):
     pass
 

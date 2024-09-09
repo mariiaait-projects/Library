@@ -36,7 +36,7 @@ class AuthorForm(forms.ModelForm):
 class UserRegistrationForm(UserCreationForm):
     username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Enter username', "class": "form-control"}))
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Enter password', "class": "form-control"}))
-    password2 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Confirm password', "class": "form-control"}))
+    password2 = forms.CharField(label="Confirm password", widget=forms.PasswordInput(attrs={'placeholder': 'Confirm password', "class": "form-control"}))
 
     class Meta:
         model = User
