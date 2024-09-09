@@ -154,7 +154,7 @@ def delete_author(request,id):
 #     product.delete()
 #     return redirect('get_cart')
 
-def register(request):
+def register_user(request):
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
@@ -163,7 +163,7 @@ def register(request):
     else:
         form = UserRegistrationForm()
         return render(request, 'library/register_form.html', {'form': form})
-def login(request):
+def login_user(request):
     if request.method == "POST":
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -175,7 +175,9 @@ def login(request):
                 return redirect('home')
     else:
         form = UserLoginForm()
-        return render(request, "library/loginform.html", {'form': form})
+        return render(request, "library/login_form.html", {'form': form})
+
+
 
 
 
