@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author, BookAuthor
-from library.forms import BookForm, GenreForm, AuthorForm
+from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -157,5 +157,15 @@ def delete_author(request,id):
 #     product = get_object_or_404(Cart, id=id)
 #     product.delete()
 #     return redirect('get_cart')
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+
+def login(request):
+    pass
 
 

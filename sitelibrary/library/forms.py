@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from library.models import Book, Genre, Author
 
@@ -30,3 +32,16 @@ class AuthorForm(forms.ModelForm):
         model = Author
         fields = ['name']
         widgets = {'name': forms.TextInput(attrs={'placeholder': 'Enter name', "class": "form-control"})}
+
+class UserRegistrationForm(UserCreationForm):
+    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Enter username', "class": "form-control"}))
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Enter password', "class": "form-control"}))
+    password2 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Confirm password', "class": "form-control"}))
+
+    class Meta:
+        model = User
+        fields = ['username', 'password1', 'password2']
+
+class UserLoginForm(forms.Form):
+    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Enter username', "class": "form-control"}))
+    password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Enter password', "class": "form-control"}))
