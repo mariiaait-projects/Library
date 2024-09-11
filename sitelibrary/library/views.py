@@ -14,6 +14,8 @@ manage_menu = [{"title": "Create book", "URL": "create_book"},
             {"title": "Create genre", "URL": "create_genre"},
             {"title": "Create author", "URL": "create_author"}]
 
+auth_menu = [{"title": "Registration", "URL": "register"},
+             {"title": "Login", "URL": "login"}]
 
 # Create your views here.
 def index(request):
@@ -177,7 +179,9 @@ def login_user(request):
         form = UserLoginForm()
         return render(request, "library/login_form.html", {'form': form})
 
-
+def logout_user(request):
+    logout(request)
+    return redirect('home')
 
 
 
