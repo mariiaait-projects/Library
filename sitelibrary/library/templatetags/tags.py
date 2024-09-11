@@ -32,3 +32,5 @@ def get_books():
 @register.simple_tag()
 def get_year():
     return datetime.now().year
+
+

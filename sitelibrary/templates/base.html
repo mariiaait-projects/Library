@@ -40,7 +40,13 @@
             </ul>
         </div>
         <div class="mr-4">
+
         </div>
+         {% if request.user.is_authenticated%}
+            <div >
+                <p>Hello, {{ request.user.username }}</p>
+            </div>
+        {% endif %}
     </div>
 </nav>
 <main>

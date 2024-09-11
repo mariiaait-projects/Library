@@ -40,17 +40,13 @@ class BookAuthor(models.Model):
     #     return f"{self.author}"
 
 
-# class Cart(models.Model):
-#     book = models.ForeignKey('Book', on_delete=models.CASCADE)
-#     quantity = models.IntegerField(default=1)
-
 
 class Coupon(models.Model):
     name = models.CharField(max_length=100, db_index=True, unique=True)
     discount = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
 
 class CartHeader(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True)
 
 class CartDetails(models.Model):
