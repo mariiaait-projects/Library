@@ -1,14 +1,13 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from library.models import Book, Genre, Author, BookAuthor
+from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails
 from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
         {"title": "Authors", "URL": "authors"},
-        {"title": "Genres", "URL": "genres"},
-        {"title": "Log in", "URL": "login"}]
+        {"title": "Genres", "URL": "genres"}]
 
 manage_menu = [{"title": "Create book", "URL": "create_book"},
             {"title": "Create genre", "URL": "create_genre"},
@@ -141,10 +140,12 @@ def delete_author(request,id):
     author.delete()
     return redirect('authors')
 
-# def buy_book(request, id):
-#     book = get_object_or_404(Book, id=id)
-#     cart = Cart.objects.create(book=book)
-#     return redirect('get_cart')
+def buy_book(request, id):
+    book = get_object_or_404(Book, id=id)
+    cart_header = CartHeader.objects.get_or_create(user=request.user)
+
+
+
 
 # def get_cart(request):
 #     purchases = Cart.objects.all()
