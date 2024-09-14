@@ -142,16 +142,17 @@ def delete_author(request,id):
 
 def buy_book(request, id):
     book = get_object_or_404(Book, id=id)
-    cart_header = CartHeader.objects.get_or_create(user=request.user)
+    cart_header,_ = CartHeader.objects.get_or_create(user=request.user)
     CartDetails.objects.create(cart_header=cart_header, book=book)
     return redirect('cart')
 
-
-
-# def get_cart(request):
-#     purchases = Cart.objects.all()
-#     total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
-#     return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases, 'total': total})
+def get_cart(request):
+    cart_header = CartHeader.objects.get(user=request.user)
+    purchases = CartDetails.objects.filter(cart_header=cart_header)
+    if purchases.exists():
+        total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
+        return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases, 'total': total})
+    return render(request, 'library/cart.html')
 
 # def delete_product_from_cart(request, id):
 #     product = get_object_or_404(Cart, id=id)
