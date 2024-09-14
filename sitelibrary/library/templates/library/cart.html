@@ -23,9 +23,6 @@
             <td>
                 {{purchase.book.price}}
             </td>
-            <td>
-                <a class="btn btn-primary" href="{% url 'delete_product_from_cart' purchase.id %}">Delete</a>
-            </td>
         </tr>
         {% endfor %}
         </tbody>

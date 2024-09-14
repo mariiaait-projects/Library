@@ -112,3 +112,8 @@ from index.html
 
 login: ASD
 pass: 12345678A"
+
+            from cart.html
+            <td>
+                <a class="btn btn-primary" href="{% url 'delete_product_from_cart' purchase.id %}">Delete</a>
+            </td>
