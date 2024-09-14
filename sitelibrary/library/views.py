@@ -10,11 +10,12 @@ menu = [{"title": "Home", "URL": "home"},
         {"title": "Genres", "URL": "genres"}]
 
 manage_menu = [{"title": "Create book", "URL": "create_book"},
-            {"title": "Create genre", "URL": "create_genre"},
-            {"title": "Create author", "URL": "create_author"}]
+               {"title": "Create genre", "URL": "create_genre"},
+               {"title": "Create author", "URL": "create_author"}]
 
 auth_menu = [{"title": "Registration", "URL": "register"},
              {"title": "Login", "URL": "login"}]
+
 
 # Create your views here.
 def index(request):
@@ -47,7 +48,6 @@ def book_by_id(request, id):
     return render(request, 'library/book_by_id.html', context=context)
 
 
-
 def create_book(request):
     if request.method == "POST":
         form = BookForm(request.POST)
@@ -70,6 +70,7 @@ def update_book(request, id):
         form = BookForm(instance=book)
         return render(request, 'library/book_form.html', context={"form": form})
 
+
 def delete_book(request, id):
     book = get_object_or_404(Book, id=id)
     book.delete()
@@ -82,6 +83,7 @@ def genre_by_id(request, id):
     context = {"title": title, "books": books}
     return render(request, 'library/genre_by_id.html', context=context)
 
+
 def create_genre(request):
     if request.method == "POST":
         form = GenreForm(request.POST)
@@ -91,6 +93,7 @@ def create_genre(request):
     else:
         form = GenreForm()
     return render(request, 'library/genre_form.html', context={"form": form})
+
 
 def update_genre(request, id):
     genre = get_object_or_404(Genre, id=id)
@@ -103,10 +106,12 @@ def update_genre(request, id):
         form = GenreForm(instance=genre)
         return render(request, 'library/genre_form.html', context={"form": form})
 
-def delete_genre(request,id):
+
+def delete_genre(request, id):
     genre = get_object_or_404(Genre, id=id)
     genre.delete()
     return redirect('genres')
+
 
 def author_by_id(request, id):
     author = get_object_or_404(Author, id=id)
@@ -114,6 +119,8 @@ def author_by_id(request, id):
     context = {"title": author.name, "books": books}
     print(books)
     return render(request, 'library/author_by_id.html', context=context)
+
+
 def create_author(request):
     if request.method == "POST":
         form = AuthorForm(request.POST)
@@ -123,6 +130,7 @@ def create_author(request):
     else:
         form = AuthorForm()
     return render(request, 'library/author_form.html', context={"form": form})
+
 
 def update_author(request, id):
     author = get_object_or_404(Author, id=id)
@@ -135,16 +143,24 @@ def update_author(request, id):
         form = AuthorForm(instance=author)
         return render(request, 'library/author_form.html', context={"form": form})
 
-def delete_author(request,id):
+
+def delete_author(request, id):
     author = get_object_or_404(Author, id=id)
     author.delete()
     return redirect('authors')
 
+
 def buy_book(request, id):
     book = get_object_or_404(Book, id=id)
-    cart_header,_ = CartHeader.objects.get_or_create(user=request.user)
-    CartDetails.objects.create(cart_header=cart_header, book=book)
+    cart_header, _ = CartHeader.objects.get_or_create(user=request.user)
+    purchases = CartDetails.objects.filter(cart_header=cart_header, book=book)
+    if purchases.exists():
+        CartDetails.quantity += 1
+        # quantity++
+    else:
+        CartDetails.objects.create(cart_header=cart_header, book=book)
     return redirect('cart')
+
 
 def get_cart(request):
     cart_header = CartHeader.objects.get(user=request.user)
@@ -153,6 +169,7 @@ def get_cart(request):
         total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
         return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases, 'total': total})
     return render(request, 'library/cart.html')
+
 
 # def delete_product_from_cart(request, id):
 #     product = get_object_or_404(Cart, id=id)
@@ -168,6 +185,8 @@ def register_user(request):
     else:
         form = UserRegistrationForm()
         return render(request, 'library/register_form.html', {'form': form})
+
+
 def login_user(request):
     if request.method == "POST":
         form = UserLoginForm(request.POST)
@@ -182,10 +201,7 @@ def login_user(request):
         form = UserLoginForm()
         return render(request, "library/login_form.html", {'form': form})
 
+
 def logout_user(request):
     logout(request)
     return redirect('home')
-
-
-
-
