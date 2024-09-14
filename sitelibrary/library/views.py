@@ -143,7 +143,8 @@ def delete_author(request,id):
 def buy_book(request, id):
     book = get_object_or_404(Book, id=id)
     cart_header = CartHeader.objects.get_or_create(user=request.user)
-
+    CartDetails.objects.create(cart_header=cart_header, book=book)
+    return redirect('cart')
 
 
 

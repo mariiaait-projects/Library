@@ -20,8 +20,8 @@ urlpatterns = [
     path('authors/delete/<int:id>/', views.delete_author, name='delete_author'),
     path('register/', views.register_user, name='register'),
     path('login/', views.login_user, name='login'),
-    path('logout', views.logout_user, name='logout')
-    # path('books/buy/<int:id>', views.buy_book, name='buy_book'),
-    # path('cart/', views.get_cart, name='get_cart'),
+    path('logout', views.logout_user, name='logout'),
+    path('books/buy/<int:id>', views.buy_book, name='buy_book'),
+    # path('cart/', views.get_cart, name='cart'),
     # path('cart/delete/<int:id>', views.delete_product_from_cart, name='delete_product_from_cart'),
 ]
