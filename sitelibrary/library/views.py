@@ -51,7 +51,7 @@ def book_by_id(request, id):
     context = {'book': book, 'authors': authors}
     return render(request, 'library/book_by_id.html', context=context)
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def create_book(request):
     if request.method == "POST":
         form = BookForm(request.POST)
@@ -62,7 +62,7 @@ def create_book(request):
         form = BookForm()
     return render(request, 'library/book_form.html', context={"form": form})
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def update_book(request, id):
     book = get_object_or_404(Book, id=id)
     if request.method == "POST":
@@ -74,7 +74,7 @@ def update_book(request, id):
         form = BookForm(instance=book)
         return render(request, 'library/book_form.html', context={"form": form})
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def delete_book(request, id):
     book = get_object_or_404(Book, id=id)
     book.delete()
@@ -87,7 +87,7 @@ def genre_by_id(request, id):
     context = {"title": title, "books": books}
     return render(request, 'library/genre_by_id.html', context=context)
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def create_genre(request):
     if request.method == "POST":
         form = GenreForm(request.POST)
@@ -98,7 +98,7 @@ def create_genre(request):
         form = GenreForm()
     return render(request, 'library/genre_form.html', context={"form": form})
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def update_genre(request, id):
     genre = get_object_or_404(Genre, id=id)
     if request.method == "POST":
@@ -110,7 +110,7 @@ def update_genre(request, id):
         form = GenreForm(instance=genre)
         return render(request, 'library/genre_form.html', context={"form": form})
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def delete_genre(request, id):
     genre = get_object_or_404(Genre, id=id)
     genre.delete()
@@ -124,7 +124,7 @@ def author_by_id(request, id):
     print(books)
     return render(request, 'library/author_by_id.html', context=context)
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def create_author(request):
     if request.method == "POST":
         form = AuthorForm(request.POST)
@@ -135,7 +135,7 @@ def create_author(request):
         form = AuthorForm()
     return render(request, 'library/author_form.html', context={"form": form})
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def update_author(request, id):
     author = get_object_or_404(Author, id=id)
     if request.method == "POST":
@@ -147,7 +147,7 @@ def update_author(request, id):
         form = AuthorForm(instance=author)
         return render(request, 'library/author_form.html', context={"form": form})
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def delete_author(request, id):
     author = get_object_or_404(Author, id=id)
     author.delete()
@@ -175,10 +175,11 @@ def get_cart(request):
     return render(request, 'library/cart.html')
 
 
-# def delete_product_from_cart(request, id):
-#     product = get_object_or_404(Cart, id=id)
-#     product.delete()
-#     return redirect('get_cart')
+@login_required(login_url=settings.LOGIN_URL)
+def delete_product_from_cart(request, id):
+    purchase = CartDetails.objects.get(id=id)
+    purchase.delete()
+    return redirect('cart')
 
 def register_user(request):
     if request.method == "POST":
@@ -205,7 +206,7 @@ def login_user(request):
         form = UserLoginForm()
         return render(request, "library/login_form.html", {'form': form})
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def logout_user(request):
     logout(request)
     return redirect('home')
