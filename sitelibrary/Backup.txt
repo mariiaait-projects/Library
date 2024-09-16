@@ -111,6 +111,7 @@ from index.html
 <a href="{% url 'buy_book' book.id %}" class="btn btn-primary">Buy</a>
 
 login: ASD
+login: Sergii
 pass: 12345678A"
 
             from cart.html

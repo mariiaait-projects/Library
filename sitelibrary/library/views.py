@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails
@@ -155,8 +156,7 @@ def buy_book(request, id):
     cart_header, _ = CartHeader.objects.get_or_create(user=request.user)
     purchases = CartDetails.objects.filter(cart_header=cart_header, book=book)
     if purchases.exists():
-        CartDetails.quantity += 1
-        # quantity++
+        purchases.update(quantity=F('quantity') + 1)
     else:
         CartDetails.objects.create(cart_header=cart_header, book=book)
     return redirect('cart')
