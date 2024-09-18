@@ -42,7 +42,7 @@ class BookAuthor(models.Model):
 class UserRole(models.Model):
     USER_ROLES = (('admin', 'Admin'), ('user', 'User'))
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=USER_ROLES)
+    role = models.CharField(max_length=10, choices=USER_ROLES, default="user")
 
 class Coupon(models.Model):
     name = models.CharField(max_length=100, db_index=True, unique=True)

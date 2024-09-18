@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails
+from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails, UserRole
 from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 
@@ -156,7 +156,7 @@ def delete_author(request, id):
 @login_required(login_url=settings.LOGIN_URL)
 def buy_book(request, id):
     book = get_object_or_404(Book, id=id)
-    cart_header, _ = CartHeader.objects.get_or_create(user=request.user)
+    cart_header, _ = CartHeader.objects.get_or_create(user=request.user.userrole)
     purchases = CartDetails.objects.filter(cart_header=cart_header, book=book)
     if purchases.exists():
         purchases.update(quantity=F('quantity') + 1)
@@ -166,8 +166,8 @@ def buy_book(request, id):
 
 @login_required(login_url=settings.LOGIN_URL)
 def get_cart(request):
-    if CartHeader.objects.filter(user=request.user).exists():
-        cart_header = CartHeader.objects.get(user=request.user)
+    if CartHeader.objects.filter(user=request.user.userrole).exists():
+        cart_header = CartHeader.objects.get(user=request.user.userrole)
         purchases = CartDetails.objects.filter(cart_header=cart_header)
         if purchases.exists():
             total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
