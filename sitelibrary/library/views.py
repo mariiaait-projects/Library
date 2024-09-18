@@ -156,7 +156,7 @@ def delete_author(request, id):
 @login_required(login_url=settings.LOGIN_URL)
 def buy_book(request, id):
     book = get_object_or_404(Book, id=id)
-    cart_header, _ = CartHeader.objects.get_or_create(user=request.user.userrole)
+    cart_header, _ = CartHeader.objects.get_or_create(user=request.user.user_role)
     purchases = CartDetails.objects.filter(cart_header=cart_header, book=book)
     if purchases.exists():
         purchases.update(quantity=F('quantity') + 1)
