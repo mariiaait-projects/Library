@@ -179,6 +179,10 @@ def get_cart(request):
 def delete_product_from_cart(request, id):
     purchase = CartDetails.objects.get(id=id)
     purchase.delete()
+    cart_header = CartHeader.objects.get(user=request.user)
+    rest_purchases = CartDetails.objects.filter(cart_header=cart_header)
+    if not rest_purchases.exists():
+        cart_header.delete()
     return redirect('cart')
 
 def register_user(request):
