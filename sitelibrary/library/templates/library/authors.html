@@ -16,8 +16,10 @@
                     {% endif %}
                     <div class="card-body mt-n3">
                         <h5><a href="{% url 'author_by_id' author.id %}">{{ author.name }}</a></h5>
+                        {% if request.user.userrole.role == 'admin' %}
                         <a class="btn btn-success" href="{% url 'update_author' author.id %}"> Update author </a>
                         <a class="btn btn-danger ml-2" href="{% url 'delete_author' author.id %}"> Delete author </a>
+                        {%endif%}
                     </div>
                 </div>
             </div>

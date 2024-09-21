@@ -17,9 +17,11 @@
         <li><strong>Genre:</strong> {{ book.genre }}</li>
         <li><strong>ISBN:</strong> {{ book.ISBN }}</li>
     </ul>
+    {% if request.user.userrole.role == 'admin' %}
     <div class="mt-4">
         <a class="btn btn-success mr-2" href="{% url 'update_book' book.id %}">Update book</a>
         <a class="btn btn-danger" href="{% url 'delete_book' book.id %}">Delete book</a>
     </div>
+    {% endif %}
 </div>
 {%endblock%}
