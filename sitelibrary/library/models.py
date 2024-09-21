@@ -42,14 +42,14 @@ class BookAuthor(models.Model):
 class UserRole(models.Model):
     USER_ROLES = (('admin', 'Admin'), ('user', 'User'))
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=USER_ROLES)
+    role = models.CharField(max_length=10, choices=USER_ROLES, default="user")
 
 class Coupon(models.Model):
     name = models.CharField(max_length=100, db_index=True, unique=True)
     discount = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
 
 class CartHeader(models.Model):
-    user = models.OneToOneField(UserRole, on_delete=models.CASCADE)
+    user_role = models.OneToOneField(UserRole, on_delete=models.CASCADE)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True)
 
 class CartDetails(models.Model):
