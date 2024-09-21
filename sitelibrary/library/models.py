@@ -49,7 +49,7 @@ class Coupon(models.Model):
     discount = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
 
 class CartHeader(models.Model):
-    user = models.OneToOneField(UserRole, on_delete=models.CASCADE)
+    user_role = models.OneToOneField(UserRole, on_delete=models.CASCADE)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True)
 
 class CartDetails(models.Model):
