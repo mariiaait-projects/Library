@@ -189,7 +189,8 @@ def register_user(request):
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            UserRole.objects.create(user=user)
             return redirect("login")
     else:
         form = UserRegistrationForm()
