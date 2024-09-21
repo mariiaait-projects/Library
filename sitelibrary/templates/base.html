@@ -39,6 +39,7 @@
                         </li>
                     </ul>
                 </li>
+                {% if request.user.userrole.role == 'admin' %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-expanded="false" href="#">Services</a>
                     <ul class="dropdown-menu" aria-labelledby="navbar-dropdown">
@@ -50,6 +51,7 @@
                         {% endfor %}
                     </ul>
                 </li>
+                {% endif %}
             </ul>
 
         </div>

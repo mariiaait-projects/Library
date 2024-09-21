@@ -156,7 +156,7 @@ def delete_author(request, id):
 @login_required(login_url=settings.LOGIN_URL)
 def buy_book(request, id):
     book = get_object_or_404(Book, id=id)
-    cart_header, _ = CartHeader.objects.get_or_create(user=request.user.user_role)
+    cart_header, _ = CartHeader.objects.get_or_create(user_role=request.user.userrole)
     purchases = CartDetails.objects.filter(cart_header=cart_header, book=book)
     if purchases.exists():
         purchases.update(quantity=F('quantity') + 1)
@@ -166,8 +166,8 @@ def buy_book(request, id):
 
 @login_required(login_url=settings.LOGIN_URL)
 def get_cart(request):
-    if CartHeader.objects.filter(user=request.user.userrole).exists():
-        cart_header = CartHeader.objects.get(user=request.user.userrole)
+    if CartHeader.objects.filter(user_role=request.user.userrole).exists():
+        cart_header = CartHeader.objects.get(user_role=request.user.userrole)
         purchases = CartDetails.objects.filter(cart_header=cart_header)
         if purchases.exists():
             total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
@@ -179,7 +179,7 @@ def get_cart(request):
 def delete_product_from_cart(request, id):
     purchase = CartDetails.objects.get(id=id)
     purchase.delete()
-    cart_header = CartHeader.objects.get(user=request.user)
+    cart_header = CartHeader.objects.get(user_role=request.user.userrole)
     rest_purchases = CartDetails.objects.filter(cart_header=cart_header)
     if not rest_purchases.exists():
         cart_header.delete()
