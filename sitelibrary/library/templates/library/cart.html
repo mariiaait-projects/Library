@@ -38,5 +38,15 @@
             </tr>
         </tfoot>
     </table>
+        <form class='mt-3' method="POST" action="{% url 'apply_coupon' %}">
+            {%csrf_token%}
+            <div class="form-group">
+                {{form.coupon.label_tag}}
+                {{form.coupon}}
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Apply
+            </button>
+        </form>
     </div>
 {%endblock%}

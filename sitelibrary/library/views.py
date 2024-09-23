@@ -215,3 +215,11 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+@login_required(login_url=settings.LOGIN_URL)
+def apply_coupon(request):
+    pass
+
+@login_required(login_url=settings.LOGIN_URL)
+def remove_coupon(request):
+    pass
