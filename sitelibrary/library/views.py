@@ -178,11 +178,11 @@ def buy_book(request, id):
 def get_cart(request):
     form = CouponApplyForm()
     code = None
-    # get user_coupon
 
     if CartHeader.objects.filter(user_role=request.user.userrole).exists():
         cart_header = CartHeader.objects.get(user_role=request.user.userrole)
         purchases = CartDetails.objects.filter(cart_header=cart_header)
+        code = cart_header.coupon.name
         if purchases.exists():
             total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
             return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases,
@@ -240,5 +240,5 @@ def apply_coupon(request):
 
 
 @login_required(login_url=settings.LOGIN_URL)
-def remove_coupon(request):
+def delete_coupon(request):
     pass
