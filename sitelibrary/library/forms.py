@@ -47,7 +47,4 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Enter password', "class": "form-control"}))
 
 class CouponApplyForm(forms.Form):
-    class Meta:
-        model = CartHeader
-        fields = ['coupon']
-        widgets = {'coupon': forms.TextInput(attrs={'placeholder': 'Enter coupon', "class": "form-control"})}
+    coupon = forms.CharField(label='Coupon', widget=forms.TextInput(attrs={'placeholder': 'Enter coupon', "class": "form-control"}))

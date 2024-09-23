@@ -4,9 +4,8 @@ from django.db.models import F
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails, UserRole
-from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm
+from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm, CouponApplyForm
 from django.contrib.auth import authenticate, login, logout
-
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -51,6 +50,7 @@ def book_by_id(request, id):
     context = {'book': book, 'authors': authors}
     return render(request, 'library/book_by_id.html', context=context)
 
+
 @login_required(login_url=settings.LOGIN_URL)
 def create_book(request):
     if request.method == "POST":
@@ -61,6 +61,7 @@ def create_book(request):
     else:
         form = BookForm()
     return render(request, 'library/book_form.html', context={"form": form})
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def update_book(request, id):
@@ -73,6 +74,7 @@ def update_book(request, id):
     else:
         form = BookForm(instance=book)
         return render(request, 'library/book_form.html', context={"form": form})
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def delete_book(request, id):
@@ -87,6 +89,7 @@ def genre_by_id(request, id):
     context = {"title": title, "books": books}
     return render(request, 'library/genre_by_id.html', context=context)
 
+
 @login_required(login_url=settings.LOGIN_URL)
 def create_genre(request):
     if request.method == "POST":
@@ -97,6 +100,7 @@ def create_genre(request):
     else:
         form = GenreForm()
     return render(request, 'library/genre_form.html', context={"form": form})
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def update_genre(request, id):
@@ -109,6 +113,7 @@ def update_genre(request, id):
     else:
         form = GenreForm(instance=genre)
         return render(request, 'library/genre_form.html', context={"form": form})
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def delete_genre(request, id):
@@ -124,6 +129,7 @@ def author_by_id(request, id):
     print(books)
     return render(request, 'library/author_by_id.html', context=context)
 
+
 @login_required(login_url=settings.LOGIN_URL)
 def create_author(request):
     if request.method == "POST":
@@ -134,6 +140,7 @@ def create_author(request):
     else:
         form = AuthorForm()
     return render(request, 'library/author_form.html', context={"form": form})
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def update_author(request, id):
@@ -147,11 +154,13 @@ def update_author(request, id):
         form = AuthorForm(instance=author)
         return render(request, 'library/author_form.html', context={"form": form})
 
+
 @login_required(login_url=settings.LOGIN_URL)
 def delete_author(request, id):
     author = get_object_or_404(Author, id=id)
     author.delete()
     return redirect('authors')
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def buy_book(request, id):
@@ -164,15 +173,21 @@ def buy_book(request, id):
         CartDetails.objects.create(cart_header=cart_header, book=book)
     return redirect('cart')
 
+
 @login_required(login_url=settings.LOGIN_URL)
 def get_cart(request):
+    form = CouponApplyForm()
+    code = None
+    # get user_coupon
+
     if CartHeader.objects.filter(user_role=request.user.userrole).exists():
         cart_header = CartHeader.objects.get(user_role=request.user.userrole)
         purchases = CartDetails.objects.filter(cart_header=cart_header)
         if purchases.exists():
             total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
-            return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases, 'total': total})
-    return render(request, 'library/cart.html')
+            return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases,
+                                                                 'total': total, 'form': form, "code": code})
+    return render(request, 'library/cart.html', context={"form": form, "code": code})
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -184,6 +199,7 @@ def delete_product_from_cart(request, id):
     if not rest_purchases.exists():
         cart_header.delete()
     return redirect('cart')
+
 
 def register_user(request):
     if request.method == "POST":
@@ -211,14 +227,17 @@ def login_user(request):
         form = UserLoginForm()
         return render(request, "library/login_form.html", {'form': form})
 
+
 @login_required(login_url=settings.LOGIN_URL)
 def logout_user(request):
     logout(request)
     return redirect('home')
 
+
 @login_required(login_url=settings.LOGIN_URL)
 def apply_coupon(request):
     pass
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def remove_coupon(request):
