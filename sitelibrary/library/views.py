@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
@@ -187,8 +189,8 @@ def get_cart(request):
             code = cart_header.coupon.name
             discount = cart_header.coupon.discount
         if purchases.exists():
-            total_before = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
-            total = total_before - (total_before * (discount / 100))
+            total_before = Decimal(sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases)))
+            total = round(total_before - (total_before * Decimal(discount / 100)), 2)
             return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases,
                                                                  'total': total, 'form': form, "code": code})
     return render(request, 'library/cart.html', context={"form": form, "code": code})
