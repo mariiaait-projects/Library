@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails, UserRole
+from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails, UserRole, Coupon
 from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm, CouponApplyForm
 from django.contrib.auth import authenticate, login, logout
 
@@ -178,14 +178,17 @@ def buy_book(request, id):
 def get_cart(request):
     form = CouponApplyForm()
     code = None
+    discount = 0
 
     if CartHeader.objects.filter(user_role=request.user.userrole).exists():
         cart_header = CartHeader.objects.get(user_role=request.user.userrole)
         purchases = CartDetails.objects.filter(cart_header=cart_header)
         if cart_header.coupon is not None:
             code = cart_header.coupon.name
+            discount = cart_header.coupon.discount
         if purchases.exists():
-            total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
+            total_before = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
+            total = total_before - (total_before * (discount / 100))
             return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases,
                                                                  'total': total, 'form': form, "code": code})
     return render(request, 'library/cart.html', context={"form": form, "code": code})
@@ -240,12 +243,17 @@ def apply_coupon(request):
     if CartHeader.objects.filter(user_role=request.user.userrole).exists():
         cart_header = CartHeader.objects.get(user_role=request.user.userrole)
         form = CouponApplyForm(request.POST)
-        coupon = form.cleaned_data.get("coupon")
-        print(coupon)
-
-
+        if form.is_valid():
+            code = form.cleaned_data.get("coupon")
+            coupon = get_object_or_404(Coupon, name=code)
+            cart_header.coupon = coupon
+            cart_header.save()
+    return redirect('cart')
 
 
 @login_required(login_url=settings.LOGIN_URL)
 def delete_coupon(request):
-    pass
+    cart_header = CartHeader.objects.get(user_role=request.user.userrole)
+    cart_header.coupon = None
+    cart_header.save()
+    return redirect('cart')
