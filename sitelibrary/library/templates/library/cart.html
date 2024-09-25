@@ -43,7 +43,7 @@
                 {%csrf_token%}
                 <div class="form-group">
                     {{form.coupon.label_tag}}
-                    {{form.coupon}}
+                    <input class="form-control" type="text" name="coupon" >
                 </div>
                 <button type="submit" class="btn btn-primary">
                     Apply

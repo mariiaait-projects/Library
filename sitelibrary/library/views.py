@@ -182,7 +182,8 @@ def get_cart(request):
     if CartHeader.objects.filter(user_role=request.user.userrole).exists():
         cart_header = CartHeader.objects.get(user_role=request.user.userrole)
         purchases = CartDetails.objects.filter(cart_header=cart_header)
-        code = cart_header.coupon.name
+        if cart_header.coupon is not None:
+            code = cart_header.coupon.name
         if purchases.exists():
             total = sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases))
             return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases,
@@ -236,7 +237,13 @@ def logout_user(request):
 
 @login_required(login_url=settings.LOGIN_URL)
 def apply_coupon(request):
-    pass
+    if CartHeader.objects.filter(user_role=request.user.userrole).exists():
+        cart_header = CartHeader.objects.get(user_role=request.user.userrole)
+        form = CouponApplyForm(request.POST)
+        coupon = form.cleaned_data.get("coupon")
+        print(coupon)
+
+
 
 
 @login_required(login_url=settings.LOGIN_URL)
