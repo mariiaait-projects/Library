@@ -57,7 +57,8 @@ h1, h2{
 }
 
 .form-width-small {
-    width: 150px;
+    width: 180px !important;
+    margin-right: 5px;
 }
 
 .nav-item {
