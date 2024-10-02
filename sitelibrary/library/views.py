@@ -259,3 +259,6 @@ def delete_coupon(request):
     cart_header.coupon = None
     cart_header.save()
     return redirect('cart')
+
+def search_book(request):
+    pass
