@@ -261,4 +261,9 @@ def delete_coupon(request):
     return redirect('cart')
 
 def search_book(request):
-    pass
+    query = request.GET.get("query")
+    if query:
+        books = Book.objects.filter(title__icontains = query)
+    else:
+        books = Book.objects.all()
+    return render(request, "library/index.html", context={"books": books})
