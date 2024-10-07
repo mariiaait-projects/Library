@@ -260,10 +260,15 @@ def delete_coupon(request):
     cart_header.save()
     return redirect('cart')
 
+
 def search_book(request):
     query = request.GET.get("query")
     if query:
-        books = Book.objects.filter(title__icontains = query)
+        books = Book.objects.filter(title__icontains=query)
     else:
         books = Book.objects.all()
     return render(request, "library/index.html", context={"books": books})
+
+
+def filter_books(request):
+    books = Book.objects.all()

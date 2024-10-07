@@ -2,13 +2,14 @@ from datetime import datetime
 
 from django import template
 from library import views
+from library.models import Genre
 
 register = template.Library()
 
 
 @register.simple_tag()
 def get_genres():
-    return views.list_genre
+    return Genre.objects.all()
 
 
 @register.simple_tag()

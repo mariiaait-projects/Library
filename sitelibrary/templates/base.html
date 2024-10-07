@@ -58,8 +58,6 @@
             <input class="form-control form-width-small" type="search" placeholder="Search for book" name="query">
             <button class="btn btn-outline-light">Search</button>
         </form>
-
-
             <div class="mr-3">
             <a href="{%url 'cart'%}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-basket-fill"
@@ -77,8 +75,36 @@
         </div>
     </div>
 </nav>
+
 <main>
-    <div class="mt-5 ml-5 mr-5">
+    <div class="container mt-5 pt-4">
+    <button class="btn btn-primary mb-4" data-toggle="collapse" data-target="#filterForm" aria-expanded="false">
+        Filter
+    </button>
+    <div id="filterForm" class="collapse mb-4">
+        <form method="get" action="{% url 'filter_books' %}">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="genre">
+                        Genre
+                    </label>
+                    <select name="genre" class="form-control">
+                        <option>All Genres</option>
+                        {% get_genres as genres %}
+                        {% for genre in genres %}
+                        <option value="{{ genre.id }}">{{ genre.genre }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+</div>
+    <div class="ml-5 mr-5">
         {%block content%}
         {%endblock%}
     </div>
