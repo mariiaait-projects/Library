@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django import template
 from library import views
-from library.models import Genre
+from library.models import Genre, Author
 
 register = template.Library()
 
@@ -10,6 +10,10 @@ register = template.Library()
 @register.simple_tag()
 def get_genres():
     return Genre.objects.all()
+
+@register.simple_tag()
+def get_authors():
+    return Author.objects.all()
 
 
 @register.simple_tag()

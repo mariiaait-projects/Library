@@ -275,3 +275,4 @@ def filter_books(request):
     genre_id = request.GET.get("genre")
     if genre_id:
         books=books.filter(genre__id=int(genre_id))
+    return render(request, "library/index.html", context={"books": books})
