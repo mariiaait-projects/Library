@@ -1,6 +1,32 @@
 {%extends 'base.html'%}
 {%block content%}
 {% load static %}
+{% load tags %}
+<div class="container mt-5 pt-4">
+    <button class="btn btn-primary mb-4" data-toggle="collapse" data-target="#filterForm" aria-expanded="false">
+        Filter
+    </button>
+    <div id="filterForm" class="collapse mb-4">
+        <form method="get" action="{% url 'filter_books' %}">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="genre">
+                        Genre
+                    </label>
+                    <select name="genre" class="form-control">
+                        <option>All Genres</option>
+                        {% get_genres as genres %}
+                        {% for genre in genres %}
+                        <option value="{{ genre.id }}">{{ genre.genre }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">Apply</button>
+        </form>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         {%for book in books%}
