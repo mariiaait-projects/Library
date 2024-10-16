@@ -22,6 +22,19 @@
                     </select>
 
                 </div>
+                <div class="col-md-3">
+                    <label for="author">
+                        Author
+                    </label>
+                    <select name="author" class="form-control">
+                        <option>All Authors</option>
+                        {% get_authors as authors %}
+                        {% for author in authors %}
+                        <option value="{{ author.id }}">{{ author.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
             </div>
             <button type="submit" class="btn btn-success mt-3">Apply</button>
         </form>

@@ -273,6 +273,6 @@ def search_book(request):
 def filter_books(request):
     books = Book.objects.all()
     genre_id = request.GET.get("genre")
-    if genre_id:
+    if genre_id and genre_id.isdigit():
         books=books.filter(genre__id=int(genre_id))
     return render(request, "library/index.html", context={"books": books})
