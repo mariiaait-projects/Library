@@ -8,17 +8,19 @@ register = template.Library()
 
 
 @register.simple_tag()
-def get_genres():
+def get_all_genres():
     return Genre.objects.all()
 
+
 @register.simple_tag()
-def get_authors():
+def get_all_authors():
     return Author.objects.all()
 
 
 @register.simple_tag()
 def get_menu():
     return views.menu
+
 
 @register.simple_tag()
 def get_manage_menu():
@@ -34,8 +36,7 @@ def get_authors():
 def get_books():
     return views.books
 
+
 @register.simple_tag()
 def get_year():
     return datetime.now().year
-
-
