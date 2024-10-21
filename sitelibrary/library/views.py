@@ -277,5 +277,7 @@ def filter_books(request):
         books=books.filter(genre__id=int(genre_id))
     price_from = request.GET.get("price_from", 0)
     price_to = request.GET.get("price_to", 100)
-    print(price_from, price_to)
+    sort_by = request.GET.get("sort_by")
+    print(sort_by)
     return render(request, "library/index.html", context={"books": books})
+
