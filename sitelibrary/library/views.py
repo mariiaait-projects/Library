@@ -275,9 +275,16 @@ def filter_books(request):
     genre_id = request.GET.get("genre")
     if genre_id and genre_id.isdigit():
         books=books.filter(genre__id=int(genre_id))
+    author_id = request.GET.get("author")
+    if author_id and author_id.isdigit():
+        books=books.filter(authors__id=int(author_id))
     price_from = request.GET.get("price_from", 0)
     price_to = request.GET.get("price_to", 100)
+    books = books.filter(price__gte=price_from).filter(price__lte=price_to)
     sort_by = request.GET.get("sort_by")
-    print(sort_by)
+    if sort_by == 'price_asc':
+        books = books.order_by('price')
+    if sort_by == 'price_desc':
+        books = books.order_by('-price')
     return render(request, "library/index.html", context={"books": books})
 
