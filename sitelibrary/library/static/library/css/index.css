@@ -20,6 +20,7 @@ main{
 h1, h2{
     text-align: center;
     margin-bottom: 40px;
+    margin-top: 10px; !important;
     color: var(--deep-blue);
 }
 
@@ -55,6 +56,11 @@ h1, h2{
 .container-logo {
     width: 100px;
 }
+
+.container > h2{
+    margin-top: 10px;
+}
+
 
 .form-width-small {
     width: 180px !important;
@@ -97,7 +103,7 @@ h1, h2{
     margin-top: 5rem;
 }
 
-//SLIDER
+/*/SLIDER
 
 *,
 *:before,
@@ -106,7 +112,9 @@ h1, h2{
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-}
+}*/
+
+
 .wrapper {
   position: relative;
   width: 100%;

@@ -1,8 +1,9 @@
 {%extends 'base.html'%}
 {% load static %}
 {%block content%}
-<h2>{{title}}</h2>
+
 <div class="container pt-5">
+    <h2>{{title}}</h2>
     <div class="row">
         {%for author in authors%}
             <div class="col-md-4 mb-4">
