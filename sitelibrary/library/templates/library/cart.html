@@ -1,4 +1,5 @@
 {%extends 'base.html'%}
+{% load static %}
 {%block content%}
     <div class="container cart-margin">
         <table class="table table-border table-striped">
@@ -18,7 +19,9 @@
                 <a href="{% url 'book_by_id' purchase.book.id %}">{{purchase.book.title}}</a>
             </td>
             <td>
-                <input type="number" data-quantity="{{ purchase.quantity }}" data-update-url="{% url '' %}"
+                <input class="product-quantity" type="number" data-quantity="{{ purchase.quantity }}"
+                       data-update-url="{% url 'cart_update_quantity' %}"
+                       data-purchase-id="{{ purchase.id }}}"
                        value="{{ purchase.quantity }}" min="1" max="100">
             </td>
             <td>
@@ -63,4 +66,5 @@
             </form>
         {% endif %}
     </div>
+    <script src="{% static 'library/js/cart_update_quantity.js' %}"></script>
 {%endblock%}

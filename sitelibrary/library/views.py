@@ -288,3 +288,5 @@ def filter_books(request):
         books = books.order_by('-price')
     return render(request, "library/index.html", context={"books": books})
 
+def cart_update_quantity(request):
+    pass
