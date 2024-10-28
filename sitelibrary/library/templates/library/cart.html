@@ -22,9 +22,10 @@
                 <input class="product-quantity" type="number" data-quantity="{{ purchase.quantity }}"
                        data-update-url="{% url 'cart_update_quantity' %}"
                        data-purchase-id="{{ purchase.id }}"
+                       data-price="{{purchase.book.price}}"
                        value="{{ purchase.quantity }}" min="1" max="100">
             </td>
-            <td>
+            <td id="unit-price-{{ purchase.id }}">
                 {{purchase.book.price}}
             </td>
             <td>
