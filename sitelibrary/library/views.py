@@ -52,6 +52,7 @@ def book_by_id(request, id):
     context = {'book': book, 'authors': authors}
     return render(request, 'library/book_by_id.html', context=context)
 
+def test
 
 @login_required(login_url=settings.LOGIN_URL)
 def create_book(request):

@@ -16,3 +16,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function updateDatabase(url, purchase_id, quantity){
+    fetch(
+        url,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+        }
+    )
+}
