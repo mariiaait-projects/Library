@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails, UserRole, Coupon
 from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm, CouponApplyForm
@@ -52,7 +52,6 @@ def book_by_id(request, id):
     context = {'book': book, 'authors': authors}
     return render(request, 'library/book_by_id.html', context=context)
 
-def test
 
 @login_required(login_url=settings.LOGIN_URL)
 def create_book(request):
@@ -290,4 +289,5 @@ def filter_books(request):
     return render(request, "library/index.html", context={"books": books})
 
 def cart_update_quantity(request):
-    pass
+    print("Python")
+    return JsonResponse({"success": True})
