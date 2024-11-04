@@ -26,7 +26,7 @@
                        data-price="{{purchase.book.price}}"
                        value="{{ purchase.quantity }}" min="1" max="100">
             </td>
-            <td  class="unit-price">
+            <td id="unit-price-{{purchase.id}}" class="unit-price">
                 {{purchase.book.price|multiply:purchase.quantity}}
             </td>
             <td>
