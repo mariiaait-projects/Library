@@ -1,3 +1,5 @@
+ const unit_prices = document.querySelectorAll(".unit_price");
+            console.log(unit_prices);
 document.addEventListener('DOMContentLoaded', function () {
     const inputs = document.querySelectorAll(".product-quantity")
     inputs.forEach(function (input) {
@@ -11,10 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let total_price = 0;
 
             unit_price_element.textContent = (price * quantity).toFixed(2);
-            inputs.forEach(function (input) {
-                //total_price += parseFloat(current_unit_price_element.textContent);
-                console.log(input.value);
-            });
+            const unit_prices = document.querySelectorAll(".unit_price");
+            console.log(unit_prices);
             total_price_element.textContent = total_price;
 
             updateDatabase(url, purchase_id, quantity);

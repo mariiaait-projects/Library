@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {% load static %}
+{% load custom_filters %}
 {%block content%}
     <div class="container cart-margin">
         <table class="table table-border table-striped">
@@ -25,8 +26,8 @@
                        data-price="{{purchase.book.price}}"
                        value="{{ purchase.quantity }}" min="1" max="100">
             </td>
-            <td id="unit-price-{{ purchase.id }}">
-                {{purchase.book.price | multiply:"3"}}
+            <td  class="unit-price">
+                {{purchase.book.price|multiply:purchase.quantity}}
             </td>
             <td>
                 <a class="btn btn-primary" href="{% url 'delete_product_from_cart' purchase.id %}">Delete</a>
