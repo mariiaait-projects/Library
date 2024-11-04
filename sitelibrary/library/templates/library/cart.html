@@ -26,7 +26,7 @@
                        value="{{ purchase.quantity }}" min="1" max="100">
             </td>
             <td id="unit-price-{{ purchase.id }}">
-                {{purchase.book.price}}
+                {{purchase.book.price | multiply:"3"}}
             </td>
             <td>
                 <a class="btn btn-primary" href="{% url 'delete_product_from_cart' purchase.id %}">Delete</a>
