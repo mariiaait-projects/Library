@@ -299,8 +299,6 @@ def cart_update_quantity(request):
             purchase = CartDetails.objects.get(id=purchase_id)
             purchase.quantity = quantity
             purchase.save()
-
-
             return JsonResponse({"success": True, 'message': 'Successfully updated quantity'})
         except Exception as ex:
             return JsonResponse({"success": False, "message": str(ex)}, status=400)
