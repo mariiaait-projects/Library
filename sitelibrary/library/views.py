@@ -289,5 +289,4 @@ def filter_books(request):
     return render(request, "library/index.html", context={"books": books})
 
 def cart_update_quantity(request):
-    print("Python")
     return JsonResponse({"success": True})

@@ -6,6 +6,7 @@ register = template.Library()
 def multiply(value, arg):
     """Умножает value на arg."""
     try:
-        return float(value) * float(arg)
+        total = value * arg
+        return round(total, 2)
     except (ValueError, TypeError):
         return None
