@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails, UserRole, Coupon
 from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm, CouponApplyForm
 from django.contrib.auth import authenticate, login, logout
+import json
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -274,10 +275,10 @@ def filter_books(request):
     books = Book.objects.all()
     genre_id = request.GET.get("genre")
     if genre_id and genre_id.isdigit():
-        books=books.filter(genre__id=int(genre_id))
+        books = books.filter(genre__id=int(genre_id))
     author_id = request.GET.get("author")
     if author_id and author_id.isdigit():
-        books=books.filter(authors__id=int(author_id))
+        books = books.filter(authors__id=int(author_id))
     price_from = request.GET.get("price_from", 0)
     price_to = request.GET.get("price_to", 100)
     books = books.filter(price__gte=price_from).filter(price__lte=price_to)
@@ -288,5 +289,19 @@ def filter_books(request):
         books = books.order_by('-price')
     return render(request, "library/index.html", context={"books": books})
 
+
 def cart_update_quantity(request):
-    return JsonResponse({"success": True})
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            purchase_id = data["purchase_id"]
+            quantity = data["quantity"]
+            purchase = CartDetails.objects.get(id=purchase_id)
+            purchase.quantity = quantity
+            purchase.save()
+
+
+            return JsonResponse({"success": True, 'message': 'Successfully updated quantity'})
+        except Exception as ex:
+            return JsonResponse({"success": False, "message": str(ex)}, status=400)
+    return JsonResponse({"success": False, "message": "Something went wrong"}, status=400)
