@@ -10,6 +10,7 @@ from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDeta
 from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm, CouponApplyForm
 from django.contrib.auth import authenticate, login, logout
 import json
+import datetime
 
 
 menu = [{"title": "Home", "URL": "home"},
@@ -200,6 +201,8 @@ def get_cart(request):
     return render(request, 'library/cart.html', context={"form": form, "code": code})
 
 def get_api_request(total, cart):
+    order_reference = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    order_date = int(datetime.datetime.now().timestamp())
     payment_data = {
         'merchantAccount': settings.MERCHANT_LOGIN,
         'merchantDomainName': settings.MERCHANT_DOMAIN_NAME,
@@ -211,7 +214,10 @@ def get_api_request(total, cart):
         'productCount': '',
         'productPrice': ''
     }
-    payment_data['merchantSignature'] = ''
+    payment_data['merchantSignature'] = generate_signature(payment_data, settings.MERCHANT_SECRET_KEY)
+    payment_data['merchantTransactionSecureType'] = 'AUTO'
+    return payment_data
+
 
 
 @login_required(login_url=settings.LOGIN_URL)
