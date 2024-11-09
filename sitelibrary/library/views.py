@@ -1,4 +1,5 @@
 from decimal import Decimal
+from itertools import product
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Book, Genre, Author, BookAuthor, CartHeader, CartDetails, UserRole, Coupon
 from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm, UserLoginForm, CouponApplyForm
 from django.contrib.auth import authenticate, login, logout
+import json
+
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -185,6 +188,7 @@ def get_cart(request):
     if CartHeader.objects.filter(user_role=request.user.userrole).exists():
         cart_header = CartHeader.objects.get(user_role=request.user.userrole)
         purchases = CartDetails.objects.filter(cart_header=cart_header)
+
         if cart_header.coupon is not None:
             code = cart_header.coupon.name
             discount = cart_header.coupon.discount
@@ -194,6 +198,20 @@ def get_cart(request):
             return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases,
                                                                  'total': total, 'form': form, "code": code})
     return render(request, 'library/cart.html', context={"form": form, "code": code})
+
+def get_api_request(total, cart):
+    payment_data = {
+        'merchantAccount': settings.MERCHANT_LOGIN,
+        'merchantDomainName': settings.MERCHANT_DOMAIN_NAME,
+        'orderReference': order_reference,
+        'orderDate': order_date,
+        'amount': total,
+        'currency': 'UAH',
+        'productName': '',
+        'productCount': '',
+        'productPrice': ''
+    }
+    payment_data['merchantSignature'] = ''
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -274,10 +292,10 @@ def filter_books(request):
     books = Book.objects.all()
     genre_id = request.GET.get("genre")
     if genre_id and genre_id.isdigit():
-        books=books.filter(genre__id=int(genre_id))
+        books = books.filter(genre__id=int(genre_id))
     author_id = request.GET.get("author")
     if author_id and author_id.isdigit():
-        books=books.filter(authors__id=int(author_id))
+        books = books.filter(authors__id=int(author_id))
     price_from = request.GET.get("price_from", 0)
     price_to = request.GET.get("price_to", 100)
     books = books.filter(price__gte=price_from).filter(price__lte=price_to)
@@ -288,6 +306,17 @@ def filter_books(request):
         books = books.order_by('-price')
     return render(request, "library/index.html", context={"books": books})
 
+
 def cart_update_quantity(request):
-    print("Python")
-    return JsonResponse({"success": True})
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            purchase_id = data["purchase_id"]
+            quantity = data["quantity"]
+            purchase = CartDetails.objects.get(id=purchase_id)
+            purchase.quantity = quantity
+            purchase.save()
+            return JsonResponse({"success": True, 'message': 'Successfully updated quantity'})
+        except Exception as ex:
+            return JsonResponse({"success": False, "message": str(ex)}, status=400)
+    return JsonResponse({"success": False, "message": "Something went wrong"}, status=400)

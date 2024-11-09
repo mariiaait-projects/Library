@@ -11,11 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             unit_price_element.textContent = (price * quantity).toFixed(2);
             const unit_price_elements = document.querySelectorAll(".unit-price");
-            const unit_prices = unit_price_elements.map(element => parseFloat(element.innerText));
+            const unit_prices = Array.from(unit_price_elements).map(element => parseFloat(element.innerText));
             let total_price = unit_prices.reduce((acc, value) => acc + value, 0);
-
-            total_price_element.textContent = total_price;
-
+            total_price_element.innerHTML = `<strong>${total_price}</strong>`;
             updateDatabase(url, purchase_id, quantity);
         });
     });

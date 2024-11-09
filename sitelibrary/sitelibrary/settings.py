@@ -124,3 +124,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'http://127.0.0.1:8000/library/login/'
+MERCHANT_LOGIN = 'freelance_user_672f7d324baa0'
+MERCHANT_DOMAIN_NAME = '127.0.0.1:8000'
+MERCHANT_SECRET_KEY = '4dbd177560fb576dc7f8224c01be44b243a69a25'
