@@ -44,29 +44,31 @@
             </tr>
         </tfoot>
     </table>
-        {% if not code %}
-            <form class='mt-3' method="POST" action="{% url 'apply_coupon' %}">
-                {%csrf_token%}
-                <div class="form-group">
-                    {{form.coupon.label_tag}}
-                    <input class="form-control" type="text" name="coupon" >
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    Apply
-                </button>
-            </form>
-        {% else %}
-            <form class='mt-3' method="POST" action="{% url 'delete_coupon' %}">
-                {%csrf_token%}
-                <div class="form-group">
-                    {{form.coupon.label_tag}}
-                    <input class="form-control" type="text" value="{{ code }}" readonly>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    Delete
-                </button>
-            </form>
-        {% endif %}
+<!--        {% if not code %}-->
+<!--            <form class='mt-3' method="POST" action="{% url 'apply_coupon' %}">-->
+<!--                {%csrf_token%}-->
+<!--                <div class="form-group">-->
+<!--                    {{form.coupon.label_tag}}-->
+<!--                    <input class="form-control" type="text" name="coupon" >-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-primary">-->
+<!--                    Apply-->
+<!--                </button>-->
+<!--            </form>-->
+<!--        {% else %}-->
+<!--            <form class='mt-3' method="POST" action="{% url 'delete_coupon' %}">-->
+<!--                {%csrf_token%}-->
+<!--                <div class="form-group">-->
+<!--                    {{form.coupon.label_tag}}-->
+<!--                    <input class="form-control" type="text" value="{{ code }}" readonly>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-primary">-->
+<!--                    Delete-->
+<!--                </button>-->
+<!--            </form>-->
+<!--        {% endif %}-->
+
+
     </div>
 <script src="{% static 'library/js/cart_update_quantity.js' %}"></script>
 {%endblock%}

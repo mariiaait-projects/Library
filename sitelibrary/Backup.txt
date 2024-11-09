@@ -5,3 +5,7 @@ pass: Qwerty123!
 Admin:
 login: admin
 pass: Qwerty123!
+
+Gmail
+python.k.2025@gmail.com
+pass: Python2025
