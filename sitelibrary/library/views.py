@@ -1,6 +1,7 @@
+import hashlib
 from decimal import Decimal
 from itertools import product
-
+import hmac
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
@@ -11,7 +12,6 @@ from library.forms import BookForm, GenreForm, AuthorForm, UserRegistrationForm,
 from django.contrib.auth import authenticate, login, logout
 import json
 import datetime
-
 
 menu = [{"title": "Home", "URL": "home"},
         {"title": "About", "URL": "about"},
@@ -196,28 +196,37 @@ def get_cart(request):
         if purchases.exists():
             total_before = Decimal(sum(map(lambda purchase: purchase.book.price * purchase.quantity, purchases)))
             total = round(total_before - (total_before * Decimal(discount / 100)), 2)
+            api = get_api_request(total, purchases)
             return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases,
-                                                                 'total': total, 'form': form, "code": code})
+                                                                 'total': total, 'form': form, "code": code, 'api': api})
     return render(request, 'library/cart.html', context={"form": form, "code": code})
 
-def get_api_request(total, cart):
+
+def generate_signature(payment_data, merchant_secret_key):
+    result_string = ";".join(";".join(item for item in value) if isinstance(value, list)
+                             else value for value in payment_data.values())
+    hash_md5 = (hmac.new(merchant_secret_key.encode('utf-8'), result_string.encode('utf-8'), digestmod='md5')
+                .hexdigest())
+    return hash_md5
+
+
+def get_api_request(total, purchases):
     order_reference = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     order_date = int(datetime.datetime.now().timestamp())
     payment_data = {
         'merchantAccount': settings.MERCHANT_LOGIN,
         'merchantDomainName': settings.MERCHANT_DOMAIN_NAME,
         'orderReference': order_reference,
-        'orderDate': order_date,
-        'amount': total,
+        'orderDate': str(order_date),
+        'amount': str(total),
         'currency': 'UAH',
-        'productName': '',
-        'productCount': '',
-        'productPrice': ''
+        'productName': [product.book.title for product in purchases],
+        'productCount': [str(product.quantity) for product in purchases],
+        'productPrice': [str(product.book.price) for product in purchases]
     }
     payment_data['merchantSignature'] = generate_signature(payment_data, settings.MERCHANT_SECRET_KEY)
     payment_data['merchantTransactionSecureType'] = 'AUTO'
     return payment_data
-
 
 
 @login_required(login_url=settings.LOGIN_URL)
