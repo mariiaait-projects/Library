@@ -44,31 +44,51 @@
             </tr>
         </tfoot>
     </table>
-<!--        {% if not code %}-->
-<!--            <form class='mt-3' method="POST" action="{% url 'apply_coupon' %}">-->
-<!--                {%csrf_token%}-->
-<!--                <div class="form-group">-->
-<!--                    {{form.coupon.label_tag}}-->
-<!--                    <input class="form-control" type="text" name="coupon" >-->
-<!--                </div>-->
-<!--                <button type="submit" class="btn btn-primary">-->
-<!--                    Apply-->
-<!--                </button>-->
-<!--            </form>-->
-<!--        {% else %}-->
-<!--            <form class='mt-3' method="POST" action="{% url 'delete_coupon' %}">-->
-<!--                {%csrf_token%}-->
-<!--                <div class="form-group">-->
-<!--                    {{form.coupon.label_tag}}-->
-<!--                    <input class="form-control" type="text" value="{{ code }}" readonly>-->
-<!--                </div>-->
-<!--                <button type="submit" class="btn btn-primary">-->
-<!--                    Delete-->
-<!--                </button>-->
-<!--            </form>-->
-<!--        {% endif %}-->
+        {% if not code %}
+            <form class='mt-3' method="POST" action="{% url 'apply_coupon' %}">
+                {%csrf_token%}
+                <div class="form-group">
+                    {{form.coupon.label_tag}}
+                    <input class="form-control" type="text" name="coupon" >
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Apply
+                </button>
+            </form>
+        {% else %}
+            <form class='mt-3' method="POST" action="{% url 'delete_coupon' %}">
+                {%csrf_token%}
+                <div class="form-group">
+                    {{form.coupon.label_tag}}
+                    <input class="form-control" type="text" value="{{ code }}" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Delete
+                </button>
+            </form>
+        {% endif %}
     <form action="https://secure.wayforpay.com/pay" accept-charset="utf-8" method="POST">
         {%csrf_token%}
+        <input name="merchantAccount" value="{{api.merchantAccount}}" hidden>
+        <input name="merchantAuthType" value="SimpleSignature" hidden>
+        <input name="merchantDomainName" value="{{api.merchantDomainName}}" hidden>
+        <input name="orderReference" value="{{api.orderReference}}" hidden>
+        <input name="orderDate" value="{{api.orderDate}}" hidden>
+        <input name="amount" value="{{api.amount}}" hidden>
+        <input name="currency" value="{{api.currency}}" hidden>
+        {%for product in api.productName%}
+            <input name="productName[]" value="{{product}}" hidden>
+        {%endfor%}
+        {%for price in api.productPrice%}
+            <input name="productPrice[]" value="{{price}}" hidden>
+        {%endfor%}
+        {%for count in api.productCount%}
+            <input name="productCount[]" value="{{count}}" hidden>
+        {%endfor%}
+        <input name="merchantSignature" value="{{api.merchantSignature}}" hidden>
+        <input type="submit" value="Pay">
+
+    </form>
 
 
     </div>
