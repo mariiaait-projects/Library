@@ -49,6 +49,9 @@
                 {%csrf_token%}
                 <div class="form-group">
                     {{form.coupon.label_tag}}
+                    {%if form.coupon.errors%}
+                        <div class="text-danger">{{form.coupon.errors|join:", "}}</div>
+                    {%endif%}
                     <input class="form-control" type="text" name="coupon" >
                 </div>
                 <button type="submit" class="btn btn-primary">

@@ -1,4 +1,5 @@
 import hashlib
+from dataclasses import field
 from decimal import Decimal
 from itertools import product
 import hmac
@@ -198,7 +199,8 @@ def get_cart(request):
             total = round(total_before - (total_before * Decimal(discount / 100)), 2)
             api = get_api_request(total, purchases)
             return render(request, 'library/cart.html', context={'title': "Cart", 'purchases': purchases,
-                                                                 'total': total, 'form': form, "code": code, 'api': api})
+                                                                 'total': total, 'form': form, "code": code,
+                                                                 'api': api})
     return render(request, 'library/cart.html', context={"form": form, "code": code})
 
 
@@ -262,9 +264,12 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 return redirect('home')
+            else:
+                form.add_error('username', "Invalid username or password")
+                form.add_error('password', "Invalid username or password")
     else:
         form = UserLoginForm()
-        return render(request, "library/login_form.html", {'form': form})
+    return render(request, "library/login_form.html", {'form': form})
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -280,9 +285,12 @@ def apply_coupon(request):
         form = CouponApplyForm(request.POST)
         if form.is_valid():
             code = form.cleaned_data.get("coupon")
-            coupon = get_object_or_404(Coupon, name=code)
-            cart_header.coupon = coupon
-            cart_header.save()
+            if Coupon.objects.filter(name=code).exists():
+                coupon = Coupon.objects.get(name=code)
+                cart_header.coupon = coupon
+                cart_header.save()
+            else:
+                form.add_error('coupon', "Coupon does not exist")
     return redirect('cart')
 
 
